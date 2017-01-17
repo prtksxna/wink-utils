@@ -4,7 +4,7 @@
   "description": "Utilities for Simple Statistics, Text Mining, Machine Learning, and more.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha ./test/"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/decisively/wink-utils/issues"
   },
-  "homepage": "https://github.com/decisively/wink-utils#readme"
+  "homepage": "https://github.com/decisively/wink-utils#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.1.0"
+  }
 }
