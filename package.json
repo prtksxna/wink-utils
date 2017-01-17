@@ -1,0 +1,19 @@
+{
+  "name": "wink-utils",
+  "version": "0.0.0",
+  "description": "Utilities for Simple Statistics, Text Mining, Machine Learning, and more.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/decisively/wink-utils.git"
+  },
+  "author": "",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/decisively/wink-utils/issues"
+  },
+  "homepage": "https://github.com/decisively/wink-utils#readme"
+}
