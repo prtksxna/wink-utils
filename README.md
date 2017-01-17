@@ -1,2 +1,4 @@
 # wink-utils
-Statistical, Text Mining, and Machine Learning Utilities
+Utilities for Statistics, Text Mining, Machine Learning, and more.
+
+![](https://api.travis-ci.org/decisively/wink-utils.svg?branch=master)

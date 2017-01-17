@@ -1,7 +1,7 @@
 {
   "name": "wink-utils",
   "version": "0.0.0",
-  "description": "Utilities for Simple Statistics, Text Mining, Machine Learning, and more.",
+  "description": "Utilities for Statistics, Text Mining, Machine Learning, and more.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha ./test/"
