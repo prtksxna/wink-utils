@@ -23,6 +23,8 @@
 
 //
 var expect = require( "chai" ).expect;
+var describe = require( "mocha" ).describe;
+var it = require( "mocha" ).it;
 var validate = require( "../lib/validate.js" );
 
 // Common test data for `null`, `undefined`, and `numeric` inputs.
