@@ -6,7 +6,8 @@
   "scripts": {
     "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha ./test/",
     "docs": "./node_modules/docco/bin/docco lib/*.js",
-    "postinstall": "npm test && npm run docs"
+    "lint": "./node_modules/jshint/bin/jshint ./lib/*.js",
+    "postinstall": "npm test && npm run lint && npm run docs"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "chai": "^3.5.0",
     "docco": "^0.7.0",
     "istanbul": "^0.4.5",
+    "jshint": "^2.9.4",
     "mocha": "^3.1.0"
   }
 }
