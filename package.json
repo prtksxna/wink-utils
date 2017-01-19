@@ -4,10 +4,10 @@
   "description": "Utilities for Statistics, Text Mining, Machine Learning, and more.",
   "main": "index.js",
   "scripts": {
+    "pretest": "npm run lint",
     "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha ./test/",
     "docs": "./node_modules/docco/bin/docco lib/*.js",
-    "lint": "./node_modules/jshint/bin/jshint ./lib/*.js",
-    "postinstall": "npm test && npm run lint && npm run docs"
+    "lint": "./node_modules/jshint/bin/jshint ./lib/*.js"
   },
   "repository": {
     "type": "git",
