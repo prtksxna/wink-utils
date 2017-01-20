@@ -63,7 +63,7 @@ describe( 'string.lowerCase()', function () {
   } );
 
   errors.forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.lowerCase.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
@@ -82,7 +82,7 @@ describe( 'string.upperCase()', function () {
   } );
 
   errors.forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.upperCase.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
@@ -101,7 +101,7 @@ describe( 'string.trim()', function () {
   } );
 
   errors.forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.trim.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
@@ -126,7 +126,7 @@ describe( 'string.removeExtraSpaces()', function () {
   } );
 
   errors.forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.removeExtraSpaces.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
@@ -150,7 +150,7 @@ describe( 'string.retainAlphaNums()', function () {
   } );
 
   errors.forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.retainAlphaNums.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
@@ -175,7 +175,7 @@ describe( 'string.extractPersonsName()', function () {
   } );
 
   errors.forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.extractPersonsName.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
@@ -197,7 +197,7 @@ describe( 'string.extractRunOfCapitalWords()', function () {
   } );
 
   errors.forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.extractRunOfCapitalWords.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
@@ -221,7 +221,7 @@ describe( 'string.marker()', function () {
   } );
 
   errors.slice( 0, 2 ).forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.marker.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
@@ -250,7 +250,7 @@ describe( 'string.ngram()', function () {
   } );
 
   errors.slice( 0, 2 ).forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.ngram.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
@@ -277,7 +277,7 @@ describe( 'string.ngramWithIndex()', function () {
 
 
   errors.slice( 0, 2 ).forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.ngramWithIndex.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );

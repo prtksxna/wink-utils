@@ -49,7 +49,7 @@ describe( 'numberWithSOM()', function () {
   ];
 
   tests.forEach( function ( test ) {
-    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
       expect( validate.numberWithSOM( test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
     } );
   } );
@@ -109,7 +109,7 @@ describe( 'email()', function () {
   } );
 
   errors.forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( validate.email.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
@@ -185,7 +185,7 @@ describe( 'mobileIN()', function () {
   } );
 
   errors.forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( validate.mobileIN.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
@@ -217,7 +217,7 @@ describe( 'date()', function () {
   } );
 
   errors.slice( 0, 2 ).forEach( function ( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( validate.date.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
