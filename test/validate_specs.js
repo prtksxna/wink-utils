@@ -22,10 +22,13 @@
 //     If not, see <http://www.gnu.org/licenses/>.
 
 //
-var expect = require( "chai" ).expect;
-var describe = require( "mocha" ).describe;
-var it = require( "mocha" ).it;
-var validate = require( "../lib/validate.js" );
+var chai = require( 'chai' );
+var mocha = require( 'mocha' );
+var validate = require( '../lib/validate.js' );
+
+var expect = chai.expect;
+var describe = mocha.describe;
+var it = mocha.it;
 
 // Common test data for `null`, `undefined`, and `numeric` inputs.
 var errors = [
@@ -35,7 +38,7 @@ var errors = [
 ];
 
 // Validate number with scale of measure test cases.
-describe( 'numberWithSOM()', function() {
+describe( 'numberWithSOM()', function () {
   var tests = [
     { whenInputIs: undefined, expectedOutputIs: null },
     { whenInputIs: '', expectedOutputIs: null },
@@ -45,15 +48,15 @@ describe( 'numberWithSOM()', function() {
     { whenInputIs: '9.87e+34Kgs.', expectedOutputIs: { num: 9.87e+34, som: 'Kgs.' } },
   ];
 
-  tests.forEach( function( test ) {
-    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function() {
+  tests.forEach( function ( test ) {
+    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
       expect( validate.numberWithSOM( test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
     } );
   } );
 } );
 
 // Validate email test cases.
-describe( 'email()', function() {
+describe( 'email()', function () {
   var tests = [
     { whenInputIs: 'pappu*lost.com', expectedOutputIs: null },
     { whenInputIs: 'pappu@lost.', expectedOutputIs: null },
@@ -99,21 +102,21 @@ describe( 'email()', function() {
     // REVIEW: { whenInputIs: 'very.“(),:;<>[]”.VERY.“very@\\ "very”.unusual@strange.example.com', expectedOutputIs: 'very.“(),:;<>[]”.VERY.“very@\\ "very”.unusual@strange.example.com' },
   ];
 
-  tests.forEach( function( test ) {
-    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function() {
+  tests.forEach( function ( test ) {
+    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
       expect( validate.email( test.whenInputIs ) ).to.equal( test.expectedOutputIs );
     } );
   } );
 
-  errors.forEach( function( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function() {
+  errors.forEach( function ( error ) {
+    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( validate.email.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
 } );
 
 // Validate non-Negative Real test cases.
-describe( 'nonNegativeReal()', function() {
+describe( 'nonNegativeReal()', function () {
   var tests = [
     { whenInputIs: undefined, expectedOutputIs: null },
     { whenInputIs: null, expectedOutputIs: null },
@@ -128,15 +131,15 @@ describe( 'nonNegativeReal()', function() {
     { whenInputIs: 192, expectedOutputIs: 192 }
   ];
 
-  tests.forEach( function( test ) {
-    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function() {
+  tests.forEach( function ( test ) {
+    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
       expect( validate.nonNegativeReal( test.whenInputIs ) ).to.equal( test.expectedOutputIs );
     } );
   } );
 } );
 
 // Validate non-Negative Integer test cases.
-describe( 'nonNegativeReal()', function() {
+describe( 'nonNegativeReal()', function () {
   var tests = [
     { whenInputIs: undefined, expectedOutputIs: null },
     { whenInputIs: null, expectedOutputIs: null },
@@ -151,15 +154,15 @@ describe( 'nonNegativeReal()', function() {
     { whenInputIs: 192, expectedOutputIs: 192 }
   ];
 
-  tests.forEach( function( test ) {
-    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function() {
+  tests.forEach( function ( test ) {
+    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
       expect( validate.nonNegativeInt( test.whenInputIs ) ).to.equal( test.expectedOutputIs );
     } );
   } );
 } );
 
 // Validate mobile number from INdia test cases.
-describe( 'mobileIN()', function() {
+describe( 'mobileIN()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: null },
     { whenInputIs: '   ', expectedOutputIs: null },
@@ -175,21 +178,21 @@ describe( 'mobileIN()', function() {
     { whenInputIs: ' +917811098110   ', expectedOutputIs: '+917811098110' }
   ];
 
-  tests.forEach( function( test ) {
-    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function() {
+  tests.forEach( function ( test ) {
+    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
       expect( validate.mobileIN( test.whenInputIs ) ).to.equal( test.expectedOutputIs );
     } );
   } );
 
-  errors.forEach( function( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function() {
+  errors.forEach( function ( error ) {
+    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( validate.mobileIN.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
 } );
 
 // Validate date test cases.
-describe( 'date()', function() {
+describe( 'date()', function () {
   var tests = [
     { whenInputIs: [ '///' ], expectedOutputIs: null },
     { whenInputIs: [ '2016/11/' ], expectedOutputIs: null },
@@ -207,14 +210,14 @@ describe( 'date()', function() {
     { whenInputIs: [ '15/7/19 11:5', [ 'yymmdd' ] ], expectedOutputIs: '201507191105' }
   ];
 
-  tests.forEach( function( test ) {
-    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function() {
+  tests.forEach( function ( test ) {
+    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
       expect( validate.date.apply( null, test.whenInputIs ) ).to.equal( test.expectedOutputIs );
     } );
   } );
 
-  errors.slice( 0, 2 ).forEach( function( error ) {
-    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function() {
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( validate.date.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );

@@ -7,8 +7,8 @@
     "pretest": "npm run lint && npm run hint",
     "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha ./test/",
     "docs": "./node_modules/docco/bin/docco lib/*.js",
-    "hint": "./node_modules/jshint/bin/jshint ./lib/*.js",
-    "lint": "./node_modules/.bin/eslint ./lib/*.js"
+    "hint": "./node_modules/jshint/bin/jshint ./lib/*.js ./test/*.js",
+    "lint": "./node_modules/.bin/eslint ./lib/*.js ./test/*.js"
   },
   "repository": {
     "type": "git",

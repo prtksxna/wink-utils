@@ -214,7 +214,7 @@
         "padded-blocks": "off",
         "prefer-arrow-callback": "off",
         "prefer-const": "error",
-        "prefer-destructuring": "error",
+        "prefer-destructuring": "off",
         "prefer-numeric-literals": "error",
         "prefer-reflect": "off",
         "prefer-rest-params": "error",
