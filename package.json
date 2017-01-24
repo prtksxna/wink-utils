@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "pretest": "npm run lint && npm run hint",
-    "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha ./test/",
+    "test": "./node_modules/.bin/_mocha ./test/",
+    "posttest": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "docs": "./node_modules/docco/bin/docco lib/*.js",
     "hint": "./node_modules/jshint/bin/jshint ./lib/*.js ./test/*.js",
     "lint": "./node_modules/.bin/eslint ./lib/*.js ./test/*.js"
@@ -22,10 +23,12 @@
   "homepage": "https://github.com/decisively/wink-utils#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "coveralls": "^2.11.15",
     "docco": "^0.7.0",
     "eslint": "^3.13.1",
     "istanbul": "^0.4.5",
     "jshint": "^2.9.4",
-    "mocha": "^3.1.0"
+    "mocha": "^3.1.0",
+    "mocha-lcov-reporter": "^1.2.0"
   }
 }
