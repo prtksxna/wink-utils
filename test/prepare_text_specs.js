@@ -203,6 +203,134 @@ describe( 'string.extractRunOfCapitalWords()', function () {
   } );
 } );
 
+// Remove Punctuation test cases.
+describe( 'string.removePunctuations()', function () {
+  var tests = [
+    { whenInputIs: '', expectedOutputIs: '' },
+    { whenInputIs: 'My sentence has all the punctuations like "\'\',;!?:"!... - () [] {} I don’t like it.', expectedOutputIs: 'My sentence has all the punctuations like                          I don t like it ' },
+    { whenInputIs: '1234.50', expectedOutputIs: '1234 50' },
+    { whenInputIs: '-1234', expectedOutputIs: ' 1234' },
+    { whenInputIs: '(1234)', expectedOutputIs: ' 1234 ' },
+    { whenInputIs: '10%', expectedOutputIs: '10%' },
+    { whenInputIs: '(a^b) x (c^d)', expectedOutputIs: ' a^b  x  c^d ' },
+    { whenInputIs: 'A sentence without any punctuations', expectedOutputIs: 'A sentence without any punctuations' },
+    { whenInputIs: 'I have an appointment at 10,with Dr. Zakir at his residence: 12/190 - Willows\' Creek.', expectedOutputIs: 'I have an appointment at 10 with Dr  Zakir at his residence  12 190   Willows  Creek ' },
+    { whenInputIs: 'Read s@me $pecial characters#-grammar ain\’t silly, it gives {structure} to your expression(s)', expectedOutputIs: 'Read s@me $pecial characters# grammar ain t silly  it gives  structure  to your expression s ' }
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.string.removePunctuations( test.whenInputIs ) ).to.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.string.removePunctuations.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+// Remove special characters test cases.
+describe( 'string.removeSplChars()', function () {
+  var tests = [
+    { whenInputIs: '', expectedOutputIs: '' },
+    { whenInputIs: 'My sentence has all the special characters like~@#%^*+=.', expectedOutputIs: 'My sentence has all the special characters like        .' },
+    { whenInputIs: 'hello@abc.com', expectedOutputIs: 'hello abc.com' },
+    { whenInputIs: '@peter is my twitter handle', expectedOutputIs: ' peter is my twitter handle' },
+    { whenInputIs: '#1. This is point number one.', expectedOutputIs: ' 1. This is point number one.' },
+    { whenInputIs: 'I am using a ^ sign!', expectedOutputIs: 'I am using a   sign!' },
+    { whenInputIs: 'There is 100% guarantee if you buy goods by December.', expectedOutputIs: 'There is 100  guarantee if you buy goods by December.' },
+    { whenInputIs: 'Hello *y Nights', expectedOutputIs: 'Hello  y Nights' },
+    { whenInputIs: 'Lemon + ginger + mint + water = infused water', expectedOutputIs: 'Lemon   ginger   mint   water   infused water' },
+    { whenInputIs: 'Why is tilde~ used ?', expectedOutputIs: 'Why is tilde  used ?' }
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.string.removeSplChars( test.whenInputIs ) ).to.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.string.removeSplChars.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+// Remove ellision test cases.
+describe( 'string.removeElisions()', function () {
+  var tests = [
+    { whenInputIs: '', expectedOutputIs: '' },
+    { whenInputIs: 'What dire offence from am\'rous causes springs', expectedOutputIs: 'What dire offence from am\'rous causes springs' },
+    { whenInputIs: 'Is, to dispute well, logic\'s chiefest end?', expectedOutputIs: 'Is, to dispute well, logic\'s chiefest end?' },
+    { whenInputIs: 'Isn\'t it?', expectedOutputIs: 'Is it?' },
+    { whenInputIs: 'Did the lady\'s purse get stolen?', expectedOutputIs: 'Did the lady\'s purse get stolen?' },
+    { whenInputIs: 'Sev\'n comes before eight.', expectedOutputIs: 'Sev\'n comes before eight.' },
+    { whenInputIs: '\'Twas enough to make a man stare.', expectedOutputIs: '\'Twas enough to make a man stare.' },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.string.removeElisions( test.whenInputIs ) ).to.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.string.removeElisions.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+// Split ellision test cases.
+describe( 'string.splitElisions()', function () {
+  var tests = [
+    { whenInputIs: '', expectedOutputIs: '' },
+    { whenInputIs: 'Whatever we ain\'t got, that\'s what you want.', expectedOutputIs: 'Whatever we ai n\'t got, that \'s what you want.' },
+    { whenInputIs: 'Oh, you can\'t help that," said the Cat: "we\'re all mad here. I\'m mad. You\'re mad.', expectedOutputIs: 'Oh, you ca n\'t help that," said the Cat: "we \'re all mad here. I \'m mad. You \'re mad.' },
+    { whenInputIs: 'Isn\'t', expectedOutputIs: 'Is n\'t' },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.string.splitElisions( test.whenInputIs ) ).to.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.string.splitElisions.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+// Amplify Not ellision test cases.
+describe( 'string.amplifyNotElision()', function () {
+  var tests = [
+    { whenInputIs: '', expectedOutputIs: '' },
+    { whenInputIs: 'Whatever we ain\'t got, that\'s what you want.', expectedOutputIs: 'Whatever we ai not got, that\'s what you want.' },
+    { whenInputIs: 'Oh, you can\'t help that," said the Cat: "we\’re all mad here. I\’m mad. You\’re mad.', expectedOutputIs: 'Oh, you ca not help that," said the Cat: "we\’re all mad here. I\’m mad. You\’re mad.' },
+    { whenInputIs: 'Isn\'t', expectedOutputIs: 'Is not' },
+    { whenInputIs: 'Can\'t sleep', expectedOutputIs: 'Ca not sleep' },
+    { whenInputIs: 'haven\'t', expectedOutputIs: 'have not' },
+    { whenInputIs: 'doesn\'t, aren\'t, mustn\'t', expectedOutputIs: 'does not, are not, must not' }
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.string.amplifyNotElision( test.whenInputIs ) ).to.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.string.amplifyNotElision.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
 // Generate marker test cases.
 describe( 'string.marker()', function () {
   var tests = [
@@ -279,6 +407,28 @@ describe( 'string.ngramWithIndex()', function () {
   errors.slice( 0, 2 ).forEach( function ( error ) {
     it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.ngramWithIndex.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+// Create sentences test cases.
+describe( 'string.sentences()', function () {
+  var tests = [
+    { whenInputIs: [ ' ' ] , expectedOutputIs: [ '' ] },
+    { whenInputIs: [ 'rain rain go away, come again another day. Little Adrianna wants to go out and play.' ] , expectedOutputIs: [ 'rain rain go away, come again another day.', 'Little Adrianna wants to go out and play.' ] },
+    { whenInputIs: [ 'what ended in the year 1919 ~?  1918 year ended when the year 1919 began:-)! Isn\'t it?', '^' ] , expectedOutputIs: [ 'what ended in the year 1919 ~?', '1918 year ended when the year 1919 began:-)!', 'Isn\'t it?' ] },
+    { whenInputIs: [ 'The goods from Mexico in 2015 were worth about $60 billion more than the goods exported to Mexico! So federal revenue in the short term would increase by roughly $12 billion.', '|' ], expectedOutputIs: [ 'The goods from Mexico in 2015 were worth about $60 billion more than the goods exported to Mexico!', 'So federal revenue in the short term would increase by roughly $12 billion.' ] },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.string.sentences.apply( null, test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.string.sentences.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
 } );
