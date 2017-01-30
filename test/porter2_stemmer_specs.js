@@ -17,8 +17,9 @@ describe( 'stem()', function () {
   input.pop();
   output.pop();
 
-  input.forEach( function ( word, i ) {
-    it( 'should return ' + output[ i ] + ' if the input is ' + word, function () {
+  // Reduce verbosity of test output by moving `it` outside the `forEach`.
+  it( 'should return stemmed output correctly for the stem input', function () {
+    input.forEach( function ( word, i ) {
       expect( stem( word ) ).to.deep.equal( output[ i ] );
     } );
   } );
