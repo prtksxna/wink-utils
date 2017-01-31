@@ -11,6 +11,8 @@ var it = mocha.it;
 
 // Validate stem test cases given by Dr Martin F Porter for Porter V2 Algoritm.
 describe( 'stem()', function () {
+  // This is a longish test - stemming 30K words - needs higher timeout for travis!
+  this.timeout(3600);
   var input = fs.readFileSync( './test/data/stem_input.txt', 'utf-8' ).split( '\n' );
   var output = fs.readFileSync( './test//data/stemmed_output.txt', 'utf-8' ).split( '\n' );
 
