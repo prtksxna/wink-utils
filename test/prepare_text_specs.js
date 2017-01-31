@@ -432,3 +432,49 @@ describe( 'string.sentences()', function () {
     } );
   } );
 } );
+
+
+// Create tokenize0 test cases.
+describe( 'string.tokenize0()', function () {
+  var tests = [
+    { whenInputIs: [ ' ' ] , expectedOutputIs: [] },
+    { whenInputIs: [ 'rain rain go away, come again another day.' ] , expectedOutputIs: [ 'rain', 'rain', 'go', 'away', 'come', 'again', 'another', 'day' ] },
+    { whenInputIs: [ 'what ended in the year 1919 ~?  1918 year ended when the year 1919 began:-)' ] , expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', '1918', 'year', 'ended', 'when', 'the', 'year', '1919', 'began' ] },
+    { whenInputIs: [ 'Isn\'t it? ' ] , expectedOutputIs: [ 'Isn', 't', 'it' ] },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.string.tokenize0.apply( null, test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.string.tokenize0.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+
+// Create tokenize test cases.
+describe( 'string.tokenize()', function () {
+  var tests = [
+    { whenInputIs: [ ' ' ] , expectedOutputIs: [ '' ] },
+    { whenInputIs: [ 'rain rain go away, come again another day' ] , expectedOutputIs: [ 'rain', 'rain', 'go', 'away', 'come', 'again', 'another', 'day' ] },
+    { whenInputIs: [ 'what ended in the year 1919 ~?  The $1 was equal to 1.2 rupees.' ] , expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', 'The', '$', '1', 'was', 'equal', 'to', '1.2', 'rupees' ] },
+    { whenInputIs: [ 'Isn\'t it? ' ] , expectedOutputIs: [ 'Is','not','it' ] },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.string.tokenize.apply( null, test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.string.tokenize.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
