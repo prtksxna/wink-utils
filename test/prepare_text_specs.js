@@ -414,9 +414,9 @@ describe( 'string.ngramWithIndex()', function () {
 // Create sentences test cases.
 describe( 'string.sentences()', function () {
   var tests = [
-    { whenInputIs: [ ' ' ] , expectedOutputIs: [ '' ] },
-    { whenInputIs: [ 'rain rain go away, come again another day. Little Adrianna wants to go out and play.' ] , expectedOutputIs: [ 'rain rain go away, come again another day.', 'Little Adrianna wants to go out and play.' ] },
-    { whenInputIs: [ 'what ended in the year 1919 ~?  1918 year ended when the year 1919 began:-)! Isn\'t it?', '^' ] , expectedOutputIs: [ 'what ended in the year 1919 ~?', '1918 year ended when the year 1919 began:-)!', 'Isn\'t it?' ] },
+    { whenInputIs: [ ' ' ], expectedOutputIs: [ '' ] },
+    { whenInputIs: [ 'rain rain go away, come again another day. Little Adrianna wants to go out and play.' ], expectedOutputIs: [ 'rain rain go away, come again another day.', 'Little Adrianna wants to go out and play.' ] },
+    { whenInputIs: [ 'what ended in the year 1919 ~?  1918 year ended when the year 1919 began:-)! Isn\'t it?', '^' ], expectedOutputIs: [ 'what ended in the year 1919 ~?', '1918 year ended when the year 1919 began:-)!', 'Isn\'t it?' ] },
     { whenInputIs: [ 'The goods from Mexico in 2015 were worth about $60 billion more than the goods exported to Mexico! So federal revenue in the short term would increase by roughly $12 billion.', '|' ], expectedOutputIs: [ 'The goods from Mexico in 2015 were worth about $60 billion more than the goods exported to Mexico!', 'So federal revenue in the short term would increase by roughly $12 billion.' ] },
   ];
 
@@ -437,10 +437,10 @@ describe( 'string.sentences()', function () {
 // Create tokenize0 test cases.
 describe( 'string.tokenize0()', function () {
   var tests = [
-    { whenInputIs: [ ' ' ] , expectedOutputIs: [] },
-    { whenInputIs: [ 'rain rain go away, come again another day.' ] , expectedOutputIs: [ 'rain', 'rain', 'go', 'away', 'come', 'again', 'another', 'day' ] },
-    { whenInputIs: [ 'what ended in the year 1919 ~?  1918 year ended when the year 1919 began:-)' ] , expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', '1918', 'year', 'ended', 'when', 'the', 'year', '1919', 'began' ] },
-    { whenInputIs: [ 'Isn\'t it? ' ] , expectedOutputIs: [ 'Isn', 't', 'it' ] },
+    { whenInputIs: [ ' ' ], expectedOutputIs: [] },
+    { whenInputIs: [ 'rain rain go away, come again another day.' ], expectedOutputIs: [ 'rain', 'rain', 'go', 'away', 'come', 'again', 'another', 'day' ] },
+    { whenInputIs: [ 'what ended in the year 1919 ~?  1918 year ended when the year 1919 began:-)' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', '1918', 'year', 'ended', 'when', 'the', 'year', '1919', 'began' ] },
+    { whenInputIs: [ 'Isn\'t it? ' ], expectedOutputIs: [ 'Isn', 't', 'it' ] },
   ];
 
   tests.forEach( function ( test ) {
@@ -460,10 +460,13 @@ describe( 'string.tokenize0()', function () {
 // Create tokenize test cases.
 describe( 'string.tokenize()', function () {
   var tests = [
-    { whenInputIs: [ ' ' ] , expectedOutputIs: [ '' ] },
-    { whenInputIs: [ 'rain rain go away, come again another day' ] , expectedOutputIs: [ 'rain', 'rain', 'go', 'away', 'come', 'again', 'another', 'day' ] },
-    { whenInputIs: [ 'what ended in the year 1919 ~?  The $1 was equal to 1.2 rupees.' ] , expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', 'The', '$', '1', 'was', 'equal', 'to', '1.2', 'rupees' ] },
-    { whenInputIs: [ 'Isn\'t it? ' ] , expectedOutputIs: [ 'Is','not','it' ] },
+    { whenInputIs: [ ' ' ], expectedOutputIs: [ '' ] },
+    { whenInputIs: [ 'rain rain go away, come again another day' ], expectedOutputIs: [ 'rain', 'rain', 'go', 'away', 'come', 'again', 'another', 'day' ] },
+    { whenInputIs: [ 'what ended in the year 1919 ~?  The $1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', 'The', '$', '1', 'was', 'equal', 'to', '1.2', 'rupees' ] },
+    { whenInputIs: [ 'what ended in the year 1919 ~?  The £1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', 'The', '£', '1', 'was', 'equal', 'to', '1.2', 'rupees' ] },
+    { whenInputIs: [ 'what ended in the year 1919 ~?  The ¥1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', 'The', '¥', '1', 'was', 'equal', 'to', '1.2', 'rupees' ] },
+    { whenInputIs: [ 'what ended in the year 1919 ~?  The €1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', 'The', '€', '1', 'was', 'equal', 'to', '1.2', 'rupees' ] },
+    { whenInputIs: [ 'Isn\'t it? ' ], expectedOutputIs: [ 'Is','not','it' ] },
   ];
 
   tests.forEach( function ( test ) {
@@ -475,6 +478,203 @@ describe( 'string.tokenize()', function () {
   errors.slice( 0, 2 ).forEach( function ( error ) {
     it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.tokenize.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+// Create phonetize test cases.
+describe( 'string.phonetize()', function () {
+  var tests = [
+    // { whenInputIs: [ '' ], expectedOutputIs: [ '' ] },
+    { whenInputIs: 'day', expectedOutputIs: 'd' },
+    { whenInputIs: 'rain rain go away, come again another day', expectedOutputIs: 'rn rn g w, km gn n0r d' },
+    { whenInputIs: 'luteinizing', expectedOutputIs: 'ltnsng' },
+    { whenInputIs: 'science', expectedOutputIs: 'sns' },
+    { whenInputIs: 'bomb', expectedOutputIs: 'bm' },
+    { whenInputIs: 'sanjaya', expectedOutputIs: 'snjy' },
+    { whenInputIs: 'sanjay', expectedOutputIs: 'snj' },
+    { whenInputIs: 'sanjai', expectedOutputIs: 'snj' },
+    { whenInputIs: 'clock', expectedOutputIs: 'klk' },
+    { whenInputIs: 'chapter', expectedOutputIs: 'chptr' },
+    { whenInputIs: 'knot', expectedOutputIs: 'nt' },
+    { whenInputIs: 'computer', expectedOutputIs: 'kmptr' },
+    { whenInputIs: 'clever', expectedOutputIs: 'klvr' },
+    { whenInputIs: 'perspective', expectedOutputIs: 'prspktv' },
+    { whenInputIs: 'intermediate', expectedOutputIs: 'intrmdt' },
+    { whenInputIs: 'quirky', expectedOutputIs: 'krk' },
+    { whenInputIs: 'rehabilitate', expectedOutputIs: 'rhbltt' },
+    { whenInputIs: 'ostentatious', expectedOutputIs: 'ostntxs' },
+    { whenInputIs: 'phenomenon', expectedOutputIs: 'fnmnn' },
+    { whenInputIs: 'peripheri', expectedOutputIs: 'prfr' },
+    { whenInputIs: 'prefer', expectedOutputIs: 'prfr' },
+    { whenInputIs: 'dodge', expectedOutputIs: 'dj' },
+    { whenInputIs: 'switch', expectedOutputIs: 'swch' },
+    { whenInputIs: 'that', expectedOutputIs: '0t' },
+    { whenInputIs: 'alopecia', expectedOutputIs: 'alpx' },
+    { whenInputIs: 'perforated', expectedOutputIs: 'prfrtd' },
+    { whenInputIs: 'flypast', expectedOutputIs: 'flpst' },
+    { whenInputIs: 'motion', expectedOutputIs: 'mxn' },
+    { whenInputIs: 'phonetize', expectedOutputIs: 'fnts' },
+    { whenInputIs: 'wrong', expectedOutputIs: 'rng' },
+    { whenInputIs: 'wait', expectedOutputIs: 'wt' },
+    { whenInputIs: 'vowel', expectedOutputIs: 'vwl' },
+    { whenInputIs: 'where', expectedOutputIs: 'whr' },
+    { whenInputIs: 'were', expectedOutputIs: 'wr' },
+    { whenInputIs: 'tough', expectedOutputIs: 'tf' },
+    { whenInputIs: 'schematic', expectedOutputIs: 'skmtc' },
+    { whenInputIs: 'lodge', expectedOutputIs: 'lj' },
+    { whenInputIs: 'fudgy', expectedOutputIs: 'fj' },
+    { whenInputIs: 'nudging', expectedOutputIs: 'njng' },
+    { whenInputIs: 'wedgier', expectedOutputIs: 'wjr' },
+    { whenInputIs: 'eat', expectedOutputIs: 'et' },
+    { whenInputIs: 'erase', expectedOutputIs: 'ers' },
+    { whenInputIs: 'ears', expectedOutputIs: 'ers' },
+    { whenInputIs: 'eyes', expectedOutputIs: 'eys' },
+    { whenInputIs: 'happy', expectedOutputIs: 'hp' },
+    { whenInputIs: 'hippy', expectedOutputIs: 'hp' },
+    { whenInputIs: 'hippo', expectedOutputIs: 'hp' },
+    { whenInputIs: 'maximise', expectedOutputIs: 'mksms' },
+    { whenInputIs: 'reflex', expectedOutputIs: 'rflks' },
+    { whenInputIs: 'weave', expectedOutputIs: 'wv' },
+    { whenInputIs: 'wrench', expectedOutputIs: 'rnch' },
+    { whenInputIs: 'vowel', expectedOutputIs: 'vwl' },
+    { whenInputIs: 'how', expectedOutputIs: 'hw' },
+    { whenInputIs: 'geranium', expectedOutputIs: 'grnm' },
+    { whenInputIs: 'girrafe', expectedOutputIs: 'grf' },
+    { whenInputIs: 'bag', expectedOutputIs: 'bg' },
+    { whenInputIs: 'badge', expectedOutputIs: 'bj' },
+    { whenInputIs: 'humming', expectedOutputIs: 'hmng' },
+    { whenInputIs: 'signed', expectedOutputIs: 'sgnd' },
+    { whenInputIs: 'singer', expectedOutputIs: 'sngr' },
+    { whenInputIs: 'signal', expectedOutputIs: 'sgnl' },
+    { whenInputIs: 'sleigh', expectedOutputIs: 'slgh' },
+    { whenInputIs: 'hedging', expectedOutputIs: 'hjng' },
+    { whenInputIs: 'groggy', expectedOutputIs: 'grg' },
+    { whenInputIs: 'hybrid', expectedOutputIs: 'hbrd' },
+    { whenInputIs: 'behalf', expectedOutputIs: 'bhlf' },
+    { whenInputIs: 'shy', expectedOutputIs: 'x' },
+    { whenInputIs: 'island', expectedOutputIs: 'islnd' },
+    { whenInputIs: 'intermediate', expectedOutputIs: 'intrmdt' },
+    { whenInputIs: 'relay', expectedOutputIs: 'rl' },
+    { whenInputIs: 'ferrous', expectedOutputIs: 'frs' },
+    { whenInputIs: 'inertia', expectedOutputIs: 'inrx' },
+    { whenInputIs: 'scion', expectedOutputIs: 'xn' },
+    { whenInputIs: 'school', expectedOutputIs: 'skl' },
+    { whenInputIs: 'away', expectedOutputIs: 'aw' },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.string.phonetize( test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.string.phonetize.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+// Create tokens stem test cases.
+describe( 'prepare.tokens.stem()', function () {
+  var tests = [
+    { whenInputIs: [ 'composed', 'esthetician', 'ergonomics', 'epidemic', 'bicentennial' ], expectedOutputIs: [ 'compos', 'esthetician', 'ergonom', 'epidem', 'bicentenni' ] },
+    { whenInputIs: [ 'difference', 'digression', 'hemorrhage', 'hepatitis', 'herbicide', 'hexagon', 'homogeneous', 'hyperactive', 'irredeemable', 'geriatrics'  ], expectedOutputIs: [ 'differ', 'digress', 'hemorrhag', 'hepat', 'herbicid', 'hexagon', 'homogen', 'hyperact', 'irredeem', 'geriatr' ] },
+    { whenInputIs: [ 'raining' ], expectedOutputIs: [ 'rain' ] },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.tokens.stem( test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.tokens.stem.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+// Create tokens removeWords test cases.
+describe( 'prepare.tokens.removeWords()', function () {
+  var tests = [
+    { whenInputIs: [ 'mary', 'had', 'a', 'little', 'lamb' ], expectedOutputIs: [ 'mary', 'little', 'lamb' ] },
+    { whenInputIs: [ 'this', 'world', 'is', 'small', 'if', 'you', 'are', 'well', 'connected' ], expectedOutputIs: [ 'world', 'small', 'well', 'connected' ] },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.tokens.removeWords( test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.tokens.removeWords.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+// Create tokens bow without log2 test cases.
+describe( 'prepare.tokens.bow()', function () {
+  var tests = [
+    { whenInputIs: [ 'mary', 'had', 'a', 'little', 'lamb', 'mary', 'had', 'a', 'little', 'lamb' ], expectedOutputIs: { mary: Math.log2( 2 + 1 ), little: Math.log2( 2 + 1 ), lamb: Math.log2( 2 + 1 ), had: Math.log2( 2 + 1 ), a: Math.log2( 2 + 1 ) } },
+    { whenInputIs: [ 'rain', 'rain', 'go', 'away', 'come', 'again', 'rain', 'and', 'again', 'go', 'away' ], expectedOutputIs: { rain: Math.log2( 3 + 1 ), go: Math.log2( 2 + 1 ), away: Math.log2( 2 + 1 ), come: Math.log2( 1 + 1 ), and: Math.log2( 1 + 1 ), again: Math.log2( 2 + 1 ) } },
+    { whenInputIs: [ '', '   ', 'go', 'away', 'come', 'again', 'rain', 'and', 'again', 'go', 'away' ], expectedOutputIs: { '': Math.log2( 1 + 1 ), '   ': Math.log2( 1 + 1 ), rain: Math.log2( 1 + 1 ), go: Math.log2( 2 + 1 ), away: Math.log2( 2 + 1 ), come: Math.log2( 1 + 1 ), and: Math.log2( 1 + 1 ), again: Math.log2( 2 + 1 )  } },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.tokens.bow( test.whenInputIs, true ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.tokens.bow.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+var myWords = prepare.words( [ 'mary', 'lamb' ] );
+// Create words - without mapper test cases
+describe( 'prepare.words()', function () {
+  var tests = [
+    { whenInputIs: 'mary', expectedOutputIs: false },
+    { whenInputIs: 'merry', expectedOutputIs: true },
+    { whenInputIs: 'lamb', expectedOutputIs: false },
+    { whenInputIs: 'marylamb', expectedOutputIs: true },
+    { whenInputIs: 'unknown', expectedOutputIs: true },
+    { whenInputIs: undefined, expectedOutputIs: true },
+    { whenInputIs: null, expectedOutputIs: true }
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( myWords.exclude( test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+} );
+
+// Create remove html tags test cases.
+describe( 'string.removeHTMLTags()', function () {
+  var tests = [
+    { whenInputIs: ' ', expectedOutputIs: ' ' },
+    { whenInputIs: 'HTML uses elements like <b> and <i> for formatting output', expectedOutputIs: 'HTML uses elements like   and   for formatting output' },
+    { whenInputIs: ' <i>This text is italic</i>', expectedOutputIs: '  This text is italic ' },
+    { whenInputIs: '<p>Vive la France&nbsp;&#160;!</p>', expectedOutputIs: ' Vive la France  ! ' },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.string.removeHTMLTags( test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.string.removeHTMLTags.bind( error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
 } );
