@@ -439,8 +439,10 @@ describe( 'string.tokenize0()', function () {
   var tests = [
     { whenInputIs: [ ' ' ], expectedOutputIs: [] },
     { whenInputIs: [ 'rain rain go away, come again another day.' ], expectedOutputIs: [ 'rain', 'rain', 'go', 'away', 'come', 'again', 'another', 'day' ] },
-    { whenInputIs: [ 'what ended in the year 1919 ~?  1918 year ended when the year 1919 began:-)' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', '1918', 'year', 'ended', 'when', 'the', 'year', '1919', 'began' ] },
-    { whenInputIs: [ 'Isn\'t it? ' ], expectedOutputIs: [ 'Isn', 't', 'it' ] },
+    { whenInputIs: [ 'what\'s ended in the year 1919 ~?  1918 year ended when the year 1919 began:-)' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', '1918', 'year', 'ended', 'when', 'the', 'year', '1919', 'began' ] },
+    { whenInputIs: [ 'Isn\'t it? ' ], expectedOutputIs: [ 'Is', 'not', 'it' ] },
+    { whenInputIs: [ 'John\'s work ISN\'t done! ' ], expectedOutputIs: [ 'John', 's', 'work', 'IS', 'not', 'done' ] },
+    { whenInputIs: [ 'This cannot be handled!' ], expectedOutputIs: [ 'This', 'can', 'not', 'be', 'handled' ] }
   ];
 
   tests.forEach( function ( test ) {
@@ -461,12 +463,12 @@ describe( 'string.tokenize0()', function () {
 describe( 'string.tokenize()', function () {
   var tests = [
     { whenInputIs: [ ' ' ], expectedOutputIs: [ '' ] },
-    { whenInputIs: [ 'rain rain go away, come again another day' ], expectedOutputIs: [ 'rain', 'rain', 'go', 'away', 'come', 'again', 'another', 'day' ] },
-    { whenInputIs: [ 'what ended in the year 1919 ~?  The $1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', 'The', '$', '1', 'was', 'equal', 'to', '1.2', 'rupees' ] },
-    { whenInputIs: [ 'what ended in the year 1919 ~?  The £1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', 'The', '£', '1', 'was', 'equal', 'to', '1.2', 'rupees' ] },
-    { whenInputIs: [ 'what ended in the year 1919 ~?  The ¥1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', 'The', '¥', '1', 'was', 'equal', 'to', '1.2', 'rupees' ] },
-    { whenInputIs: [ 'what ended in the year 1919 ~?  The €1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', 'The', '€', '1', 'was', 'equal', 'to', '1.2', 'rupees' ] },
-    { whenInputIs: [ 'Isn\'t it? ' ], expectedOutputIs: [ 'Is','not','it' ] },
+    { whenInputIs: [ 'rain rain go away, come again another day' ], expectedOutputIs: [ 'rain', 'rain', 'go', 'away', ',', 'come', 'again', 'another', 'day' ] },
+    { whenInputIs: [ 'what\'s ended in the year 1919 ~?  The $1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', '\'s', 'ended', 'in', 'the', 'year', '1919', '~', '?', 'The', '$', '1', 'was', 'equal', 'to', '1.2', 'rupees', '.' ] },
+    { whenInputIs: [ 'what ended in the 1919 year~?  The £1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', '1919', 'year~', '?', 'The', '£', '1', 'was', 'equal', 'to', '1.2', 'rupees', '.' ] },
+    { whenInputIs: [ 'what\'ll \'end in the year 1919\'?  The ¥1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', '\'ll', '\'', 'end', 'in', 'the', 'year', '1919', '\'', '?', 'The', '¥', '1', 'was', 'equal', 'to', '1.2', 'rupees', '.' ] },
+    { whenInputIs: [ 'what ended in the year\'s last month ?  The €1 cannot be equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year\'s', 'last', 'month', '?', 'The', '€', '1', 'can', 'not', 'be', 'equal', 'to', '1.2', 'rupees', '.' ] },
+    { whenInputIs: [ 'Isn\'t... it? ' ], expectedOutputIs: [ 'Is', 'not', '…', 'it', '?' ] },
   ];
 
   tests.forEach( function ( test ) {
