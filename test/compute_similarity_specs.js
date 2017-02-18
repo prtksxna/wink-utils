@@ -32,6 +32,7 @@ var describe = mocha.describe;
 var it = mocha.it;
 
 // ### Define common errors.
+
 // These are common test data for `null`, `undefined`, and `numeric` inputs
 // across all the functions included in the script.
 // The exception cases specific to the function are part of the test script of the function.
@@ -44,10 +45,12 @@ var errors = [
 
 
 // ### Set Jaccard test cases.
-// Jaccard Similarity Index uses a pair of set of tokens representing inputs Set A -> `sa` and Set B ->`sb`.
-// The expected value of index should reside between 0 and 1.
-// The test cases have sets created with string, numbers and null.
 
+// Jaccard Similarity Index uses a pair of set of tokens representing inputs
+// Set A -> `sa` and Set B ->`sb`.
+// The expected value of index resides between 0 and 1. Floating points handling
+// is left for user to handle.
+// The test cases use sets of strings only, numbers only, and their combinations.
 var setA = new Set( [ 'wonderland' ] );
 var setB = new Set( [ 'wonderland' ] );
 var setE = new Set( [ 'quiet' ] );
@@ -75,7 +78,13 @@ describe( 'set.jaccard()', function () {
   } );
 } );
 
-// set tversky test cases with default alpha and beta, weights inputs
+// ### Set Tversky test cases
+
+// Tversky Similarity Index is tested using the sets prepared for Jaccard tests.
+// The input to the test function requires two sets: set a is the prototype and
+// set b is the variant. The function is tested with and without assigning
+// weights to the prototype and variant. The function assumes 50-50 weights in
+// case no weight parameters are specified.
 var setD = new Set( [ 'Alice', 'Wonderland' ] );
 describe( 'set.tversky()', function () {
   var tests = [
@@ -104,7 +113,15 @@ describe( 'set.tversky()', function () {
 } );
 
 
-// string dl test cases
+// ### string dl test cases
+
+// Damerau-Levenshtein(DL) similarity is a higher order function. It is
+// tested by first creating function testsim.
+// The function is tested with string of text, numbers,  text with
+// special characters and empty strings.
+// Special error handling cases has been included to test the max length (60)
+// of the input strings and when both input strings are either null or empty.
+
 var testsim = similarity.string.createDLFunction( );
 describe( 'string.createDLFunction( )', function () {
   var tests = [
@@ -139,7 +156,9 @@ describe( 'string.createDLFunction( )', function () {
   } );
 } );
 
-// string exact tests
+// ### string exact tests
+
+// String matches along with null and undefined inputs are tested.
 describe( 'string.exact()', function () {
   var tests = [
     { whenInputIs: [ 'hello', 'hello' ] , expectedOutputIs: 1 },
@@ -155,7 +174,18 @@ describe( 'string.exact()', function () {
   } );
 } );
 
-// bow cosine test cases
+// ### bow cosine similarity test cases
+
+// This function requires two sets of bag of words as an input to determine the
+// similarity between the given sets.
+// In order to test this function, the input is given as sentences.
+// In the forEach loop, these sentences are converted into tokens ( A and B)
+// prepare.string.tokenize0 function.
+// The tokenized output becomes an input for creating the Bag of words by
+// using prepare.tokens.bow
+// Special error handling is done for specific erros such as null, undefine bow
+// and number and string is given as bow.
+
 describe( 'bow.cosine( )', function () {
   var tests = [
     { whenInputIs: [ 'Merry Kurisumasu. I am Hotseiosha, a Japanese priest who acts like Santa Claus.', 'Santa Claus is enacted by Japanese priest, Merry Kurisumasu' ] , expectedOutputIs: 0.5547001962252291 },
