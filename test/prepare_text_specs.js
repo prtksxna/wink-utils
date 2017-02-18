@@ -30,14 +30,17 @@ var expect = chai.expect;
 var describe = mocha.describe;
 var it = mocha.it;
 
-// Common test data for `null`, `undefined`, and `numeric` inputs.
+// ### Define common errors.
+// These are common test data for `null`, `undefined`, and `numeric` inputs
+// across all the functions included in the script.
+// The exception cases specific to the function are part of the test script of the function.
 var errors = [
   { whenInputIs: null, expectedOutputIs: /^Cannot read.*/ },
   { whenInputIs: undefined, expectedOutputIs: /^Cannot read.*/ },
   { whenInputIs: 1, expectedOutputIs: /is not a function$/ }
 ];
 
-// Convert to Lower Case test cases.
+// ### Create index test cases.
 describe( 'createIndex()', function () {
   var tests = [
     { whenInputIs: undefined, expectedOutputIs: Object.create( null ) }
@@ -50,10 +53,15 @@ describe( 'createIndex()', function () {
   } );
 } );
 
-// Convert to Lower Case test cases.
+// ### Convert to Lower Case test cases.
+
 describe( 'string.lowerCase()', function () {
   var tests = [
-    { whenInputIs: 'UPPERCASE', expectedOutputIs: 'uppercase' }
+    { whenInputIs: 'UPPERCASE', expectedOutputIs: 'uppercase' },
+    { whenInputIs: 'Camelcase', expectedOutputIs: 'camelcase' },
+    { whenInputIs: 'lowercase', expectedOutputIs: 'lowercase' },
+    { whenInputIs: '12345.56',  expectedOutputIs: '12345.56' },
+    { whenInputIs: '201A-41', expectedOutputIs: '201a-41' }
   ];
 
   tests.forEach( function ( test ) {
@@ -69,10 +77,15 @@ describe( 'string.lowerCase()', function () {
   } );
 } );
 
-// Convert to Upper Case test cases.
+// ### Convert to Upper Case test cases.
+
 describe( 'string.upperCase()', function () {
   var tests = [
-    { whenInputIs: 'lowercase', expectedOutputIs: 'LOWERCASE' }
+    { whenInputIs: 'lowercase', expectedOutputIs: 'LOWERCASE' },
+    { whenInputIs: 'Camelcase', expectedOutputIs: 'CAMELCASE' },
+    { whenInputIs: 'UPPER', expectedOutputIs: 'UPPER' },
+    { whenInputIs: '12345.56',  expectedOutputIs: '12345.56' },
+    { whenInputIs: '201a-41', expectedOutputIs: '201A-41' }
   ];
 
   tests.forEach( function ( test ) {
@@ -88,10 +101,13 @@ describe( 'string.upperCase()', function () {
   } );
 } );
 
-// Trim leading & trailing spaces test cases.
+// ### Trim leading & trailing spaces test cases.
+
 describe( 'string.trim()', function () {
   var tests = [
-    { whenInputIs: '   has leading & trailing spaces   ', expectedOutputIs: 'has leading & trailing spaces' }
+    { whenInputIs: '   has leading & trailing spaces   ', expectedOutputIs: 'has leading & trailing spaces' },
+    { whenInputIs: '     ', expectedOutputIs: '' },
+    { whenInputIs: 'sentence has a      in it', expectedOutputIs: 'sentence has a      in it' }
   ];
 
   tests.forEach( function ( test ) {
@@ -107,7 +123,8 @@ describe( 'string.trim()', function () {
   } );
 } );
 
-// Remove Extra White Spaces test cases.
+// ### Remove Extra White Spaces test cases.
+
 describe( 'string.removeExtraSpaces()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: '' },
@@ -132,7 +149,8 @@ describe( 'string.removeExtraSpaces()', function () {
   } );
 } );
 
-// Clean Text test cases.
+// ### Clean Text test cases.
+
 describe( 'string.retainAlphaNums()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: '' },
@@ -156,7 +174,10 @@ describe( 'string.retainAlphaNums()', function () {
   } );
 } );
 
-// Clean Name test cases.
+// ### Clean Name test cases.
+
+// Function is tested for persons name with professional qualifications
+// pre-fixed, suffixed or embedded in the name itself.
 describe( 'string.extractPersonsName()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: '' },
@@ -165,7 +186,7 @@ describe( 'string.extractPersonsName()', function () {
     { whenInputIs: 'Dr. Ashwini Kumar Sharma', expectedOutputIs: 'Ashwini Kumar Sharma' },
     { whenInputIs: 'Dr. (Mrs.) B. Techpadma Rao M B B S (Gyne)', expectedOutputIs: 'B Techpadma Rao' },
     { whenInputIs: '  B. Techpadma Mtechrao L L B', expectedOutputIs: 'B Techpadma Mtechrao' },
-    { whenInputIs: '  B. Tech Ramarao B. Tech., M. Tech.', expectedOutputIs: '' },
+    { whenInputIs: '  B. Tech Ramarao B. Tech., M. Tech.', expectedOutputIs: '' }
   ];
 
   tests.forEach( function ( test ) {
@@ -181,7 +202,8 @@ describe( 'string.extractPersonsName()', function () {
   } );
 } );
 
-// Get Run of Capital Words test cases.
+// ### Get Run of Capital Words test cases.
+
 describe( 'string.extractRunOfCapitalWords()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: null },
@@ -203,7 +225,8 @@ describe( 'string.extractRunOfCapitalWords()', function () {
   } );
 } );
 
-// Remove Punctuation test cases.
+// ### Remove Punctuation test cases.
+
 describe( 'string.removePunctuations()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: '' },
@@ -231,7 +254,8 @@ describe( 'string.removePunctuations()', function () {
   } );
 } );
 
-// Remove special characters test cases.
+// ### Remove special characters test cases.
+
 describe( 'string.removeSplChars()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: '' },
@@ -259,7 +283,12 @@ describe( 'string.removeSplChars()', function () {
   } );
 } );
 
-// Remove ellision test cases.
+// ### Remove ellision test cases.
+
+// All elisions are not handled by this function. Only the basic ones are
+// removed
+// Apostrophes are not handled by ellision functions
+
 describe( 'string.removeElisions()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: '' },
@@ -269,6 +298,7 @@ describe( 'string.removeElisions()', function () {
     { whenInputIs: 'Did the lady\'s purse get stolen?', expectedOutputIs: 'Did the lady\'s purse get stolen?' },
     { whenInputIs: 'Sev\'n comes before eight.', expectedOutputIs: 'Sev\'n comes before eight.' },
     { whenInputIs: '\'Twas enough to make a man stare.', expectedOutputIs: '\'Twas enough to make a man stare.' },
+    { whenInputIs: 'I\'ll not start early', expectedOutputIs: 'I not start early' }
   ];
 
   tests.forEach( function ( test ) {
@@ -284,7 +314,8 @@ describe( 'string.removeElisions()', function () {
   } );
 } );
 
-// Split ellision test cases.
+// ### Split ellision test cases.
+
 describe( 'string.splitElisions()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: '' },
@@ -306,7 +337,8 @@ describe( 'string.splitElisions()', function () {
   } );
 } );
 
-// Amplify Not ellision test cases.
+// ### Amplify Not ellision test cases.
+
 describe( 'string.amplifyNotElision()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: '' },
@@ -331,7 +363,8 @@ describe( 'string.amplifyNotElision()', function () {
   } );
 } );
 
-// Generate marker test cases.
+// ### Generate marker test cases.
+
 describe( 'string.marker()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: '' },
@@ -355,7 +388,8 @@ describe( 'string.marker()', function () {
   } );
 } );
 
-// Create ngram test cases.
+// ### Create ngram test cases.
+
 describe( 'string.ngram()', function () {
   var tests = [
     { whenInputIs: [ '' ], expectedOutputIs: Object.create( null ) },
@@ -369,6 +403,8 @@ describe( 'string.ngram()', function () {
     { whenInputIs: [ 'rachna', 7 ], expectedOutputIs: Object.create( null ) },
     { whenInputIs: [ 'mamma', 2 ], expectedOutputIs: { ma: 2, am: 1, mm: 1 } },
     { whenInputIs: [ 'rain rain', 3 ], expectedOutputIs: { ' ra': 1, ain: 2, 'in ': 1, 'n r': 1, rai: 2 } },
+    { whenInputIs: [ 'rain rain', -3 ], expectedOutputIs: { } },
+    { whenInputIs: [ 'fastidious', 11 ], expectedOutputIs: { } }
   ];
 
   tests.forEach( function ( test ) {
@@ -384,7 +420,8 @@ describe( 'string.ngram()', function () {
   } );
 } );
 
-// Create ngram with index test cases.
+// ### Create ngram with index test cases.
+
 describe( 'string.ngramWithIndex()', function () {
   var ngIndex = prepare.createIndex();
 
@@ -403,7 +440,6 @@ describe( 'string.ngramWithIndex()', function () {
     expect( ngIndex ).to.deep.equal( { ra: [ 1 ], ac: [ 1 ], ch: [ 1, 2 ], hn: [ 1, 2 ], na: [ 1, 2 ], ar: [ 2 ], rc: [ 2 ] } );
   } );
 
-
   errors.slice( 0, 2 ).forEach( function ( error ) {
     it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.string.ngramWithIndex.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
@@ -411,7 +447,8 @@ describe( 'string.ngramWithIndex()', function () {
   } );
 } );
 
-// Create sentences test cases.
+// ### Create sentences test cases.
+
 describe( 'string.sentences()', function () {
   var tests = [
     { whenInputIs: [ ' ' ], expectedOutputIs: [ '' ] },
@@ -434,7 +471,11 @@ describe( 'string.sentences()', function () {
 } );
 
 
-// Create tokenize0 test cases.
+// ### Create tokenize0 test cases.
+
+// tests  basic tokenze functionality with alpha, numbers and underscores
+// all other characters are stripped from the output.
+
 describe( 'string.tokenize0()', function () {
   var tests = [
     { whenInputIs: [ ' ' ], expectedOutputIs: [] },
@@ -442,7 +483,8 @@ describe( 'string.tokenize0()', function () {
     { whenInputIs: [ 'what\'s ended in the year 1919 ~?  1918 year ended when the year 1919 began:-)' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', 'year', '1919', '1918', 'year', 'ended', 'when', 'the', 'year', '1919', 'began' ] },
     { whenInputIs: [ 'Isn\'t it? ' ], expectedOutputIs: [ 'Is', 'not', 'it' ] },
     { whenInputIs: [ 'John\'s work ISN\'t done! ' ], expectedOutputIs: [ 'John', 's', 'work', 'IS', 'not', 'done' ] },
-    { whenInputIs: [ 'This cannot be handled!' ], expectedOutputIs: [ 'This', 'can', 'not', 'be', 'handled' ] }
+    { whenInputIs: [ 'This cannot be handled!' ], expectedOutputIs: [ 'This', 'can', 'not', 'be', 'handled' ] },
+    { whenInputIs: [ 'This is an _ character in the sentence.' ], expectedOutputIs: [ 'This', 'is', 'an', '_', 'character', 'in', 'the', 'sentence' ] }
   ];
 
   tests.forEach( function ( test ) {
@@ -459,7 +501,8 @@ describe( 'string.tokenize0()', function () {
 } );
 
 
-// Create tokenize test cases.
+// ### Create tokenize test cases.
+
 describe( 'string.tokenize()', function () {
   var tests = [
     { whenInputIs: [ ' ' ], expectedOutputIs: [ '' ] },
@@ -484,7 +527,8 @@ describe( 'string.tokenize()', function () {
   } );
 } );
 
-// Create phonetize test cases.
+// ### Create phonetize test cases.
+
 describe( 'string.phonetize()', function () {
   var tests = [
     // { whenInputIs: [ '' ], expectedOutputIs: [ '' ] },
@@ -577,7 +621,9 @@ describe( 'string.phonetize()', function () {
     } );
   } );
 } );
-// Create tokens stem test cases.
+
+// ### Create tokens stem test cases.
+
 describe( 'prepare.tokens.stem()', function () {
   var tests = [
     { whenInputIs: [ 'composed', 'esthetician', 'ergonomics', 'epidemic', 'bicentennial' ], expectedOutputIs: [ 'compos', 'esthetician', 'ergonom', 'epidem', 'bicentenni' ] },
@@ -598,7 +644,8 @@ describe( 'prepare.tokens.stem()', function () {
   } );
 } );
 
-// Create tokens removeWords test cases.
+// ### Create tokens removeWords test cases.
+
 describe( 'prepare.tokens.removeWords()', function () {
   var tests = [
     { whenInputIs: [ 'mary', 'had', 'a', 'little', 'lamb' ], expectedOutputIs: [ 'mary', 'little', 'lamb' ] },
@@ -618,7 +665,8 @@ describe( 'prepare.tokens.removeWords()', function () {
   } );
 } );
 
-// Create tokens bow without log2 test cases.
+// ### Create tokens bow without log2 test cases.
+
 describe( 'prepare.tokens.bow()', function () {
   var tests = [
     { whenInputIs: [ 'mary', 'had', 'a', 'little', 'lamb', 'mary', 'had', 'a', 'little', 'lamb' ], expectedOutputIs: { mary: Math.log2( 2 + 1 ), little: Math.log2( 2 + 1 ), lamb: Math.log2( 2 + 1 ), had: Math.log2( 2 + 1 ), a: Math.log2( 2 + 1 ) } },
@@ -639,8 +687,12 @@ describe( 'prepare.tokens.bow()', function () {
   } );
 } );
 
+// ### Create words - without mapper test cases
+
+// Higher order function, can only test the true/false status with inputs
+// Actual result is not expected with these testcases.
+
 var myWords = prepare.words( [ 'mary', 'lamb' ] );
-// Create words - without mapper test cases
 describe( 'prepare.words()', function () {
   var tests = [
     { whenInputIs: 'mary', expectedOutputIs: false },
@@ -659,7 +711,10 @@ describe( 'prepare.words()', function () {
   } );
 } );
 
-// Create remove html tags test cases.
+// ### Create remove html tags test cases.
+
+// Tests all except hexacodes
+
 describe( 'string.removeHTMLTags()', function () {
   var tests = [
     { whenInputIs: ' ', expectedOutputIs: ' ' },
