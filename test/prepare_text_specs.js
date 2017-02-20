@@ -208,8 +208,15 @@ describe( 'string.extractRunOfCapitalWords()', function () {
   var tests = [
     { whenInputIs: '', expectedOutputIs: null },
     { whenInputIs: '        ', expectedOutputIs: null },
-    { whenInputIs: 'my both friends Ashwani Sharma & Kailash Kher are a nice persons', expectedOutputIs: [ 'Ashwani Sharma', 'Kailash Kher' ] },
-    { whenInputIs: 'My name is Ram Asrey.', expectedOutputIs: [ 'My', 'Ram Asrey' ] }
+    { whenInputIs: 'My both friends Ashwani Sharma & Kailash Kher are a nice persons', expectedOutputIs: [ 'Ashwani Sharma', 'Kailash Kher' ] },
+    { whenInputIs: 'My name is Ram Asrey.', expectedOutputIs: [ 'Ram Asrey' ] },
+    { whenInputIs: 'My NAME Is Ram Asrey.', expectedOutputIs: [ 'My NAME Is Ram Asrey' ] },
+    { whenInputIs: 'My name is ram asrey.', expectedOutputIs: null },
+    { whenInputIs: 'A R Rahman is a famous Musician', expectedOutputIs: [ 'A R Rahman' ] },
+    { whenInputIs: 'A. R. Rahman is a famous Musician', expectedOutputIs: null },
+    { whenInputIs: 'Apt #202, IInd Floor, Orange County, CA', expectedOutputIs: [ 'IInd Floor', 'Orange County' ] },
+    { whenInputIs: 'Baker Street B221, 10 Downing Street', expectedOutputIs: [ 'Baker Street B', 'Downing Street' ] },
+    { whenInputIs: 'B221 Baker Street, 10 Downing Street', expectedOutputIs: [ 'Baker Street', 'Downing Street' ] }
   ];
 
   tests.forEach( function ( test ) {
