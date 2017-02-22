@@ -549,6 +549,7 @@ describe( 'string.tokenize()', function () {
   var tests = [
     { whenInputIs: [ ' ' ], expectedOutputIs: [ '' ] },
     { whenInputIs: [ 'rain rain go away, come again another day' ], expectedOutputIs: [ 'rain', 'rain', 'go', 'away', ',', 'come', 'again', 'another', 'day' ] },
+    { whenInputIs: [ 'rain rain_ go away, come again another day' ], expectedOutputIs: [ 'rain', 'rain_', 'go', 'away', ',', 'come', 'again', 'another', 'day' ] },
     { whenInputIs: [ 'what\'s ended in the year 1919 ~?  The $1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', '\'s', 'ended', 'in', 'the', 'year', '1919', '~', '?', 'The', '$', '1', 'was', 'equal', 'to', '1.2', 'rupees', '.' ] },
     { whenInputIs: [ 'what ended in the 1919 year~?  The £1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', 'ended', 'in', 'the', '1919', 'year~', '?', 'The', '£', '1', 'was', 'equal', 'to', '1.2', 'rupees', '.' ] },
     { whenInputIs: [ 'what\'ll \'end in the year 1919\'?  The ¥1 was equal to 1.2 rupees.' ], expectedOutputIs: [ 'what', '\'ll', '\'', 'end', 'in', 'the', 'year', '1919', '\'', '?', 'The', '¥', '1', 'was', 'equal', 'to', '1.2', 'rupees', '.' ] },
