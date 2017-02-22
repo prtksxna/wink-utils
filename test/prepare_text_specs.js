@@ -40,19 +40,6 @@ var errors = [
   { whenInputIs: 1, expectedOutputIs: /is not a function$/ }
 ];
 
-// ### Create index test cases.
-describe( 'createIndex()', function () {
-  var tests = [
-    { whenInputIs: undefined, expectedOutputIs: Object.create( null ) }
-  ];
-
-  tests.forEach( function ( test ) {
-    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
-      expect( prepare.createIndex( test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
-    } );
-  } );
-} );
-
 // ### Convert to Lower Case test cases.
 
 describe( 'string.lowerCase()', function () {
@@ -462,29 +449,31 @@ describe( 'string.bong()', function () {
   } );
 } );
 
-// ### Create ngram with index test cases.
+// ### Create bong with index test cases.
+var bwi = prepare.string.bongWithIndex( 'names', 2 );
 
-describe( 'string.ngramWithIndex()', function () {
-  var ngIndex = prepare.createIndex();
+describe( 'string.bongWithIndex()', function () {
+  var bongIndex;
 
-  it( 'should return ' + JSON.stringify( {} ) + ' if the input is ' + JSON.stringify( [ '', 2, 0, ngIndex ] ), function () {
-    expect( prepare.string.ngramWithIndex.apply( null, [ '', 2, 0, ngIndex ] ) ).to.deep.equal( {} );
-    expect( ngIndex ).to.deep.equal( {} );
+  it( 'should return ' + JSON.stringify( [ '', 0 ] ) + ' if the input is {}', function () {
+    expect( bwi.bong.apply( null, [ '', 0 ] ) ).to.deep.equal( {} );
   } );
 
-  it( 'should return ' + JSON.stringify( {} ) + ' if the input is ' + JSON.stringify( [ 'rachna', 2, 0, ngIndex ] ), function () {
-    expect( prepare.string.ngramWithIndex.apply( null, [ 'rachna', 2, 1, ngIndex ] ) ).to.deep.equal( { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 } );
-    expect( ngIndex ).to.deep.equal( { ra: [ 1 ], ac: [ 1 ], ch: [ 1 ], hn: [ 1 ], na: [ 1 ] } );
+  it( 'should return ' + JSON.stringify( [ 'rachna', 1 ] ) + ' if the input is { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 }', function () {
+    expect( bwi.bong.apply( null, [ 'rachna', 1 ] ) ).to.deep.equal( { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 } );
   } );
 
-  it( 'should return ' + JSON.stringify( {} ) + ' if the input is ' + JSON.stringify( [ 'archna', 2, 0, ngIndex ] ), function () {
-    expect( prepare.string.ngramWithIndex.apply( null, [ 'archna', 2, 2, ngIndex ] ) ).to.deep.equal( { ar: 1, rc: 1, ch: 1, hn: 1, na: 1 } );
-    expect( ngIndex ).to.deep.equal( { ra: [ 1 ], ac: [ 1 ], ch: [ 1, 2 ], hn: [ 1, 2 ], na: [ 1, 2 ], ar: [ 2 ], rc: [ 2 ] } );
+  it( 'should return ' + JSON.stringify( [ 'archna', 2 ] ) + ' if the input is { ar: 1, rc: 1, ch: 1, hn: 1, na: 1 }', function () {
+    expect( bwi.bong.apply( null, [ 'archna', 2 ] ) ).to.deep.equal( { ar: 1, rc: 1, ch: 1, hn: 1, na: 1 } );
+    bongIndex = bwi.index();
+    expect( bongIndex.index ).to.deep.equal( { ra: [ 1 ], ac: [ 1 ], ch: [ 1, 2 ], hn: [ 1, 2 ], na: [ 1, 2 ], ar: [ 2 ], rc: [ 2 ] } );
+    expect( bongIndex.feature ).to.deep.equal( 'names' );
+    expect( bongIndex.operation( 'rachna', bongIndex.params ) ).to.deep.equal( { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 } );
   } );
 
   errors.slice( 0, 2 ).forEach( function ( error ) {
     it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
-      expect( prepare.string.ngramWithIndex.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+      expect( bwi.bong.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
 } );
