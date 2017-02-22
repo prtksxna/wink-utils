@@ -395,18 +395,53 @@ describe( 'string.marker()', function () {
   } );
 } );
 
-// ### Create ngram test cases.
+// ### Create ngrams test cases.
 
-describe( 'string.ngram()', function () {
+describe( 'string.ngrams()', function () {
+  var tests = [
+    { whenInputIs: [ '' ], expectedOutputIs: [] },
+    { whenInputIs: [ 'some string', -1 ], expectedOutputIs: [] },
+    { whenInputIs: [ '', 2 ], expectedOutputIs: [] },
+    { whenInputIs: [ '        ', 2 ], expectedOutputIs: [ '  ', '  ', '  ', '  ', '  ', '  ', '  ' ] },
+    { whenInputIs: [ 'archna', 2 ], expectedOutputIs: [ 'ar', 'rc', 'ch', 'hn', 'na' ] },
+    { whenInputIs: [ 'rachna', 2 ], expectedOutputIs: [ 'ra', 'ac', 'ch', 'hn', 'na' ] },
+    { whenInputIs: [ 'rachna', 6 ], expectedOutputIs: [ 'rachna' ] },
+    { whenInputIs: [ 'rachna', 0 ], expectedOutputIs: [ 'ra', 'ac', 'ch', 'hn', 'na' ] },
+    { whenInputIs: [ 'rachna' ], expectedOutputIs: [ 'ra', 'ac', 'ch', 'hn', 'na' ] },
+    { whenInputIs: [ 'rachna', 7 ], expectedOutputIs: [] },
+    { whenInputIs: [ 'mamma', 2 ], expectedOutputIs: [ 'ma', 'am', 'mm', 'ma' ] },
+    { whenInputIs: [ 'rain rain', 3 ], expectedOutputIs: [ 'rai', 'ain', 'in ', 'n r', ' ra', 'rai', 'ain' ] },
+    { whenInputIs: [ 'rain rain', -3 ], expectedOutputIs: [] },
+    { whenInputIs: [ 'fastidious', 11 ], expectedOutputIs: [] }
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.string.ngrams.apply( null, test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.string.ngrams.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+
+// ### Create bong test cases.
+
+describe( 'string.bong()', function () {
   var tests = [
     { whenInputIs: [ '' ], expectedOutputIs: Object.create( null ) },
-    { whenInputIs: [ 'some string' ], expectedOutputIs: Object.create( null ) },
+    { whenInputIs: [ 'some string', -1 ], expectedOutputIs: Object.create( null ) },
     { whenInputIs: [ '', 2 ], expectedOutputIs: Object.create( null ) },
     { whenInputIs: [ '        ', 2 ], expectedOutputIs: { '  ': 7 } },
     { whenInputIs: [ 'archna', 2 ], expectedOutputIs: { ar: 1, rc: 1, ch: 1, hn: 1, na: 1 } },
     { whenInputIs: [ 'rachna', 2 ], expectedOutputIs: { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 } },
     { whenInputIs: [ 'rachna', 6 ], expectedOutputIs: { rachna: 1 } },
-    { whenInputIs: [ 'rachna', 0 ], expectedOutputIs: { '': 6 } },
+    { whenInputIs: [ 'rachna', 0 ], expectedOutputIs: { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 } },
+    { whenInputIs: [ 'rachna' ], expectedOutputIs: { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 } },
     { whenInputIs: [ 'rachna', 7 ], expectedOutputIs: Object.create( null ) },
     { whenInputIs: [ 'mamma', 2 ], expectedOutputIs: { ma: 2, am: 1, mm: 1 } },
     { whenInputIs: [ 'rain rain', 3 ], expectedOutputIs: { ' ra': 1, ain: 2, 'in ': 1, 'n r': 1, rai: 2 } },
@@ -416,13 +451,13 @@ describe( 'string.ngram()', function () {
 
   tests.forEach( function ( test ) {
     it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
-      expect( prepare.string.ngram.apply( null, test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+      expect( prepare.string.bong.apply( null, test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
     } );
   } );
 
   errors.slice( 0, 2 ).forEach( function ( error ) {
     it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
-      expect( prepare.string.ngram.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+      expect( prepare.string.bong.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
     } );
   } );
 } );
