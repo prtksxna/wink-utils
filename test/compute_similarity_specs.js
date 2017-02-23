@@ -59,16 +59,16 @@ var setC = new Set( [ 1, 2, 3, 4 ] );
 var setG = new Set( [ 'Alice', 'looking', 'glass' ] );
 describe( 'set.jaccard()', function () {
   var tests = [
-    { whenInputIs: [ setE, setF ] , expectedOutputIs: 0 },
-    { whenInputIs: [ setA, setC ] , expectedOutputIs: 0 },
-    { whenInputIs: [ setB, setA ], expectedOutputIs: 1 },
-    { whenInputIs: [ new Set( [ 'alice', 'in', 'wonderland' ] ), new Set( [ 'alice', 'in', 'wonder', 'land' ] ) ], expectedOutputIs: 0.4 },
-    { whenInputIs: [ new Set( [ 'Harry', 'Potter', 'and', 'the', 'Deathly', 'Hallows' ] ), new Set( [ 'Harry', 'Potter', 'and', 'the', 'Deadly', 'Hallows' ] ) ], expectedOutputIs: 0.7142857142857143 },
-    { whenInputIs: [ new Set( [ 'Harry', 'Potter', 'and', 'the', 'Deathly', 'Hallows' ] ), new Set( [ 'the', 'Deathly', 'Hallows', 'and', 'Harry', 'Potter' ] ) ], expectedOutputIs: 1 },
+    { whenInputIs: [ setE, setF ], expectedOutputIs: { similarity: 0, distance: 1 } },
+    { whenInputIs: [ setA, setC ], expectedOutputIs: { similarity: 0, distance: 1 } },
+    { whenInputIs: [ setB, setA ], expectedOutputIs: { similarity: 1, distance: 0 } },
+    { whenInputIs: [ new Set( [ 'alice', 'in', 'wonderland' ] ), new Set( [ 'alice', 'in', 'wonder', 'land' ] ) ], expectedOutputIs: { similarity: 0.4, distance: 0.6 } },
+    { whenInputIs: [ new Set( [ 'Harry', 'Potter', 'and', 'the', 'Deathly', 'Hallows' ] ), new Set( [ 'Harry', 'Potter', 'and', 'the', 'Deadly', 'Hallows' ] ) ], expectedOutputIs: { similarity: 0.7142857142857143, distance: 1 - 0.7142857142857143 } },
+    { whenInputIs: [ new Set( [ 'Harry', 'Potter', 'and', 'the', 'Deathly', 'Hallows' ] ), new Set( [ 'the', 'Deathly', 'Hallows', 'and', 'Harry', 'Potter' ] ) ], expectedOutputIs: { similarity: 1, distance: 0 } },
   ];
   tests.forEach( function ( test ) {
-    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
-      expect( similarity.set.jaccard.apply( null, test.whenInputIs ) ).to.equal( test.expectedOutputIs );
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( similarity.set.jaccard.apply( null, test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
     } );
   } );
   errors.forEach( function ( error ) {
@@ -88,21 +88,21 @@ describe( 'set.jaccard()', function () {
 var setD = new Set( [ 'Alice', 'Wonderland' ] );
 describe( 'set.tversky()', function () {
   var tests = [
-    { whenInputIs: [ setA, setB ] , expectedOutputIs: 1 },
-    { whenInputIs: [ setA, setD ] , expectedOutputIs: 0 },
-    { whenInputIs: [ setB, setA ], expectedOutputIs: 1 },
-    { whenInputIs: [ setA, setE, 0.9, 0.1 ] , expectedOutputIs: 0 },
-    { whenInputIs: [ new Set( [ 'Alice', 'in', 'Wonderland' ] ), setD, 0.7, 0.3 ] , expectedOutputIs: 0.7407407407407407 },
-    { whenInputIs: [ new Set( [ 'Alice', 'in', 'Wonderland' ] ), setD, 0.3, 0.7 ] , expectedOutputIs: 0.8695652173913044 },
-    { whenInputIs: [ setB, setA, 0.7, 0.3 ] , expectedOutputIs: 1 },
-    { whenInputIs: [ setA, setB, 0.1, 0.9 ] , expectedOutputIs: 1 },
-    { whenInputIs: [ setC, setD, 0.3, 0.7 ] , expectedOutputIs: 0 },
-    { whenInputIs: [ setE, setF, 0.3, 0.7 ] , expectedOutputIs: 0 },
-    { whenInputIs: [ setD, setG ] , expectedOutputIs: 0.4 },
+    { whenInputIs: [ setA, setB ], expectedOutputIs: { similarity: 1, distance: 0 } },
+    { whenInputIs: [ setA, setD ], expectedOutputIs: { similarity: 0, distance: 1 } },
+    { whenInputIs: [ setB, setA ], expectedOutputIs: { similarity: 1, distance: 0 } },
+    { whenInputIs: [ setA, setE, 0.9, 0.1 ], expectedOutputIs: { similarity: 0, distance: 1 } },
+    { whenInputIs: [ new Set( [ 'Alice', 'in', 'Wonderland' ] ), setD, 0.7, 0.3 ] , expectedOutputIs: { similarity: 0.7407407407407407, distance: 1 - 0.7407407407407407 } },
+    { whenInputIs: [ new Set( [ 'Alice', 'in', 'Wonderland' ] ), setD, 0.3, 0.7 ] , expectedOutputIs: { similarity: 0.8695652173913044, distance: 1 - 0.8695652173913044 } },
+    { whenInputIs: [ setB, setA, 0.7, 0.3 ], expectedOutputIs: { similarity: 1, distance: 0 } },
+    { whenInputIs: [ setA, setB, 0.1, 0.9 ], expectedOutputIs: { similarity: 1, distance: 0 } },
+    { whenInputIs: [ setC, setD, 0.3, 0.7 ], expectedOutputIs: { similarity: 0, distance: 1 } },
+    { whenInputIs: [ setE, setF, 0.3, 0.7 ], expectedOutputIs: { similarity: 0, distance: 1 } },
+    { whenInputIs: [ setD, setG ], expectedOutputIs: { similarity: 0.4, distance: 0.6 } },
   ];
   tests.forEach( function ( test ) {
-    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
-      expect( similarity.set.tversky.apply( null, test.whenInputIs ) ).to.equal( test.expectedOutputIs );
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( similarity.set.tversky.apply( null, test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
     } );
   } );
   errors.forEach( function ( error ) {
@@ -125,20 +125,20 @@ describe( 'set.tversky()', function () {
 var testsim = similarity.string.createDLFunction( );
 describe( 'string.createDLFunction( )', function () {
   var tests = [
-    { whenInputIs: [ ' ', '  '  ] , expectedOutputIs: { edits: 1, similarity: 0.5 } },
-    { whenInputIs: [ 'Amsterdam', 'amsterdam'  ] , expectedOutputIs: { edits: 1, similarity: 0.8888888888888888 } },
-    { whenInputIs: [ 'illusion', 'delusion' ] , expectedOutputIs: { edits: 2, similarity: 0.75 } },
-    { whenInputIs: [ 'alternate', 'alternative' ] , expectedOutputIs: { edits: 2, similarity: 0.8181818181818181 } },
-    { whenInputIs: [ 'ambivalent', 'ambiguous' ] , expectedOutputIs: { edits: 6, similarity: 0.4 } },
-    { whenInputIs: [ 'xion@testmail.com', 'xion@testmail.com' ] , expectedOutputIs: { edits: 0, similarity: 1 } },
-    { whenInputIs: [ 'xion@testmail.in', 'xion@testmail.com' ] , expectedOutputIs: { edits: 3, similarity: 0.8235294117647058 } },
-    { whenInputIs: [ '100,300,000.00', '100,300,001.00' ] , expectedOutputIs: { edits: 1, similarity: 0.9285714285714286 } },
-    { whenInputIs: [ 'lengthy', '' ], expectedOutputIs: { edits: 7, similarity: 0 } },
-    { whenInputIs: [ '', 'lengthy' ], expectedOutputIs: { edits: 7, similarity: 0 } }
+    { whenInputIs: [ ' ', '  '  ], expectedOutputIs: { distance: 1, similarity: 0.5 } },
+    { whenInputIs: [ 'Amsterdam', 'amsterdam'  ], expectedOutputIs: { distance: 1, similarity: 0.8888888888888888 } },
+    { whenInputIs: [ 'illusion', 'delusion' ], expectedOutputIs: { distance: 2, similarity: 0.75 } },
+    { whenInputIs: [ 'alternate', 'alternative' ], expectedOutputIs: { distance: 2, similarity: 0.8181818181818181 } },
+    { whenInputIs: [ 'ambivalent', 'ambiguous' ], expectedOutputIs: { distance: 6, similarity: 0.4 } },
+    { whenInputIs: [ 'xion@testmail.com', 'xion@testmail.com' ], expectedOutputIs: { distance: 0, similarity: 1 } },
+    { whenInputIs: [ 'xion@testmail.in', 'xion@testmail.com' ], expectedOutputIs: { distance: 3, similarity: 0.8235294117647058 } },
+    { whenInputIs: [ '100,300,000.00', '100,300,001.00' ], expectedOutputIs: { distance: 1, similarity: 0.9285714285714286 } },
+    { whenInputIs: [ 'lengthy', '' ], expectedOutputIs: { distance: 7, similarity: 0 } },
+    { whenInputIs: [ '', 'lengthy' ], expectedOutputIs: { distance: 7, similarity: 0 } }
   ];
 
   tests.forEach( function ( test ) {
-    it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
       expect( testsim( test.whenInputIs[0], test.whenInputIs[1] ) ).to.deep.equal( test.expectedOutputIs );
     } );
   } );
@@ -161,11 +161,11 @@ describe( 'string.createDLFunction( )', function () {
 // String matches along with null and undefined inputs are tested.
 describe( 'string.exact()', function () {
   var tests = [
-    { whenInputIs: [ 'hello', 'hello' ] , expectedOutputIs: 1 },
-    { whenInputIs: [ 'Elixir', 'Felix' ] , expectedOutputIs: 0 },
-    { whenInputIs: [ ' ', '' ] , expectedOutputIs: 0 },
-    { whenInputIs: [ undefined, null ] , expectedOutputIs: 0 },
-    { whenInputIs: [ null, null ] , expectedOutputIs: 1 }
+    { whenInputIs: [ 'hello', 'hello' ] , expectedOutputIs: { distance: 0, similarity: 1 } },
+    { whenInputIs: [ 'Elixir', 'Felix' ] , expectedOutputIs: { distance: 1, similarity: 0 } },
+    { whenInputIs: [ ' ', '' ] , expectedOutputIs: { distance: 1, similarity: 0 } },
+    { whenInputIs: [ undefined, null ] , expectedOutputIs: { distance: 1, similarity: 0 } },
+    { whenInputIs: [ null, null ] , expectedOutputIs: { distance: 0, similarity: 1 } }
   ];
   tests.forEach( function ( test ) {
     it( 'should return ' + test.expectedOutputIs + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
@@ -188,11 +188,11 @@ describe( 'string.exact()', function () {
 
 describe( 'bow.cosine( )', function () {
   var tests = [
-    { whenInputIs: [ 'Merry Kurisumasu. I am Hotseiosha, a Japanese priest who acts like Santa Claus.', 'Santa Claus is enacted by Japanese priest, Merry Kurisumasu' ] , expectedOutputIs: 0.5547001962252291 },
-    { whenInputIs: [ 'Hello, How are you ?', 'Good, How about you ?' ]  , expectedOutputIs: 0.5 },
-    { whenInputIs: [ 'Sorry. Excuse me. Pardon me. Sorry. Excuse me.' , 'Yeah, Scuse me Oh! Pardon my galoshes.' ] , expectedOutputIs: 0.3563483225498992 },
-    { whenInputIs: [ '   ' , 'is anyone there ? ' ] , expectedOutputIs: 0 },
-    { whenInputIs: [ '' , 'is anyone there ? ' ] , expectedOutputIs: 0 }
+    { whenInputIs: [ 'Merry Kurisumasu. I am Hotseiosha, a Japanese priest who acts like Santa Claus.', 'Santa Claus is enacted by Japanese priest, Merry Kurisumasu' ], expectedOutputIs: { similarity: 0.5547001962252291, distance: 1 - 0.5547001962252291 } },
+    { whenInputIs: [ 'Hello, How are you ?', 'Good, How about you ?' ], expectedOutputIs: { similarity: 0.5, distance: 0.5 } },
+    { whenInputIs: [ 'Sorry. Excuse me. Pardon me. Sorry. Excuse me.' , 'Yeah, Scuse me Oh! Pardon my galoshes.' ], expectedOutputIs: { similarity: 0.3563483225498992, distance: 1 - 0.3563483225498992 } },
+    { whenInputIs: [ '   ' , 'is anyone there ? ' ], expectedOutputIs: { similarity: 0, distance: 1 } },
+    { whenInputIs: [ '' , 'is anyone there ? ' ], expectedOutputIs: { similarity: 0, distance: 1 } }
   ];
   tests.forEach( function ( test ) {
     var tokensA = prepare.string.tokenize0( test.whenInputIs[ 0 ] );
@@ -204,9 +204,9 @@ describe( 'bow.cosine( )', function () {
     } );
   } );
     var specificErrors = [
-      { whenInputIs: [ undefined, undefined ] , expectedOutputIs: 0 },
-      { whenInputIs: [ null, null ] , expectedOutputIs: 0 },
-      { whenInputIs: [ 1, 'A' ] , expectedOutputIs: 0 },
+      { whenInputIs: [ undefined, undefined ], expectedOutputIs: { similarity: 0, distance: 1 } },
+      { whenInputIs: [ null, null ], expectedOutputIs: { similarity: 0, distance: 1 } },
+      { whenInputIs: [ 1, 'A' ], expectedOutputIs: { similarity: 0, distance: 1 } },
     ];
     specificErrors.forEach( function ( error ) {
     it( 'should return ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
