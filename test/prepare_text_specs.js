@@ -724,8 +724,8 @@ describe( 'prepare.tokens.bow()', function () {
 // Higher order function, can only test the true/false status with inputs
 // Actual result is not expected with these testcases.
 
-var myWords = prepare.words( [ 'mary', 'lamb' ] );
-describe( 'prepare.words()', function () {
+var myWords = prepare.helper.words( [ 'mary', 'lamb' ] );
+describe( 'prepare.helper.words()', function () {
   var tests = [
     { whenInputIs: 'mary', expectedOutputIs: false },
     { whenInputIs: 'merry', expectedOutputIs: true },
