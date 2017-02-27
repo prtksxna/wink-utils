@@ -382,6 +382,32 @@ describe( 'string.marker()', function () {
   } );
 } );
 
+// ### SOC test cases.
+
+describe( 'string.soc()', function () {
+  it( 'should return set of a, p, l, e', function () {
+    var myset = prepare.string.soc( 'apple' );
+    expect( myset.has( 'a' ) ).to.deep.equal( true );
+    expect( myset.has( 'p' ) ).to.deep.equal( true );
+    expect( myset.has( 'l' ) ).to.deep.equal( true );
+    expect( myset.has( 'e' ) ).to.deep.equal( true );
+    expect( myset.size ).to.deep.equal( 4 );
+    expect( myset.has( 'm' ) ).to.deep.equal( false );
+  } );
+
+  it( 'should return set of a, p, l, e', function () {
+    var socIndex = prepare.helper.index();
+    prepare.string.soc( 'apple', socIndex.build, 0 );
+    prepare.string.soc( 'banana', socIndex.build, 1 );
+    prepare.string.soc( 'blackberry', socIndex.build, 2 );
+    prepare.string.soc( 'apricot', socIndex.build, 3 );
+    prepare.string.soc( 'avocado', socIndex.build, 4 );
+    prepare.string.soc( 'blueberry', socIndex.build, 5 );
+    var result = socIndex.result();
+    expect( result ).to.deep.equal( { a: [ 0, 3, 4 ], b: [ 1, 2, 5 ] } );
+  } );
+} );
+
 // ### Create ngrams test cases.
 
 describe( 'string.ngrams()', function () {
@@ -723,10 +749,11 @@ describe( 'prepare.tokens.bow()', function () {
 
 // Higher order function, can only test the true/false status with inputs
 // Actual result is not expected with these testcases.
-var myWords = prepare.helper.words( [ 'mary', 'lamb' ] );
+var myWords = prepare.helper.words( [ 'Mary', 'Lamb' ], [ prepare.string.lowerCase ] );
 describe( 'prepare.helper.words()', function () {
   var tests = [
     { whenInputIs: 'mary', expectedOutputIs: false },
+    { whenInputIs: 'Mary', expectedOutputIs: true },
     { whenInputIs: 'merry', expectedOutputIs: true },
     { whenInputIs: 'lamb', expectedOutputIs: false },
     { whenInputIs: 'marylamb', expectedOutputIs: true },
@@ -739,6 +766,14 @@ describe( 'prepare.helper.words()', function () {
     it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
       expect( myWords.exclude( test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
     } );
+  } );
+
+  it( 'should return the set with myWords.set()', function () {
+    var myset = myWords.set();
+    expect( myset.has( 'mary' ) ).to.deep.equal( true );
+    expect( myset.has( 'Mary' ) ).to.deep.equal( false );
+    expect( myset.has( 'lamb' ) ).to.deep.equal( true );
+    expect( myset.has( 'merry' ) ).to.deep.equal( false );
   } );
 } );
 
