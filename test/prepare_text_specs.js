@@ -681,6 +681,29 @@ describe( 'prepare.tokens.stem()', function () {
   } );
 } );
 
+// ### Create tokens phonetize test cases.
+
+describe( 'prepare.tokens.phonetize()', function () {
+  var tests = [
+    { whenInputIs: [ 'girl', 'is', 'walking', 'towards', 'school' ], expectedOutputIs: [ 'grl', 'is', 'wlkng', 'twrds', 'skl' ] },
+    { whenInputIs: [  ], expectedOutputIs: [  ] },
+    { whenInputIs: [ 'someone', 'called', 'me', 'yesterday' ], expectedOutputIs: [ 'smn', 'kld', 'm', 'ystrd' ] },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.tokens.phonetize( test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.tokens.phonetize.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
+
+
 // ### Create tokens removeWords test cases.
 
 describe( 'prepare.tokens.removeWords()', function () {
