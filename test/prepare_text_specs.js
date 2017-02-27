@@ -723,7 +723,6 @@ describe( 'prepare.tokens.bow()', function () {
 
 // Higher order function, can only test the true/false status with inputs
 // Actual result is not expected with these testcases.
-
 var myWords = prepare.helper.words( [ 'mary', 'lamb' ] );
 describe( 'prepare.helper.words()', function () {
   var tests = [
@@ -740,6 +739,50 @@ describe( 'prepare.helper.words()', function () {
     it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
       expect( myWords.exclude( test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
     } );
+  } );
+} );
+
+// ### helper.index
+
+// Test by building a separate index.
+var myIndex = prepare.helper.index();
+var resIndex = {
+  had: [ 2, 5 ],
+  lamb: [ 3 ],
+  little: [ 1 ],
+  mary: [ 0 ],
+  sparrow: [ 6 ],
+  tom: [ 4 ]
+};
+describe( 'prepare.helper.index()', function () {
+  var tests = [
+    { whenInputIs: [ 'mary', 0 ], expectedOutputIs: true },
+    { whenInputIs: [ 'little', 1 ], expectedOutputIs: true },
+    { whenInputIs: [ 'had', 2 ], expectedOutputIs: true },
+    { whenInputIs: [ 'lamb', 3 ], expectedOutputIs: true },
+    { whenInputIs: [ 'tom', 4 ], expectedOutputIs: true },
+    { whenInputIs: [ 'had', 5 ], expectedOutputIs: true },
+    { whenInputIs: [ 'sparrow', 6 ], expectedOutputIs: true }
+  ];
+  // Build index.
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( myIndex.build.apply( null, test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+  // Check index.
+  it( 'should return index when result is called', function () {
+    expect( myIndex.result( ) ).to.deep.equal( resIndex );
+  } );
+  // Observer impact of no validations!
+  it( 'should return index when result is called', function () {
+    expect( myIndex.build( ) ).to.deep.equal( true );
+  } );
+
+  it( 'should return updated index when result is called', function () {
+    // Update index with error that got thru in the previous step.
+    resIndex.undefined = [ undefined ];
+    expect( myIndex.result( ) ).to.deep.equal( resIndex );
   } );
 } );
 
