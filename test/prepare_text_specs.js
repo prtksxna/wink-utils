@@ -483,35 +483,6 @@ describe( 'string.bong()', function () {
   } );
 } );
 
-// ### Create bong with index test cases.
-var bwi = prepare.string.bongWithIndex( 'names', 2 );
-
-describe( 'string.bongWithIndex()', function () {
-  var bongIndex;
-
-  it( 'should return ' + JSON.stringify( [ '', 0 ] ) + ' if the input is {}', function () {
-    expect( bwi.bong.apply( null, [ '', 0 ] ) ).to.deep.equal( {} );
-  } );
-
-  it( 'should return ' + JSON.stringify( [ 'rachna', 1 ] ) + ' if the input is { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 }', function () {
-    expect( bwi.bong.apply( null, [ 'rachna', 1 ] ) ).to.deep.equal( { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 } );
-  } );
-
-  it( 'should return ' + JSON.stringify( [ 'archna', 2 ] ) + ' if the input is { ar: 1, rc: 1, ch: 1, hn: 1, na: 1 }', function () {
-    expect( bwi.bong.apply( null, [ 'archna', 2 ] ) ).to.deep.equal( { ar: 1, rc: 1, ch: 1, hn: 1, na: 1 } );
-    bongIndex = bwi.index();
-    expect( bongIndex.index ).to.deep.equal( { ra: [ 1 ], ac: [ 1 ], ch: [ 1, 2 ], hn: [ 1, 2 ], na: [ 1, 2 ], ar: [ 2 ], rc: [ 2 ] } );
-    expect( bongIndex.feature ).to.deep.equal( 'names' );
-    expect( bongIndex.operation( 'rachna', bongIndex.params ) ).to.deep.equal( { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 } );
-  } );
-
-  errors.slice( 0, 2 ).forEach( function ( error ) {
-    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
-      expect( bwi.bong.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
-    } );
-  } );
-} );
-
 // ### Create sentences test cases.
 
 describe( 'string.sentences()', function () {
