@@ -395,7 +395,7 @@ describe( 'string.soc()', function () {
     expect( myset.has( 'm' ) ).to.deep.equal( false );
   } );
 
-  it( 'should return set of a, p, l, e', function () {
+  it( 'indexer result should return an index of a and b', function () {
     var socIndex = prepare.helper.index();
     prepare.string.soc( 'apple', socIndex.build, 0 );
     prepare.string.soc( 'banana', socIndex.build, 1 );
@@ -466,6 +466,14 @@ describe( 'string.bong()', function () {
     it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
       expect( prepare.string.bong.apply( null, test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
     } );
+  } );
+
+  it( 'indexer result should return an index of 2-grams of rachna & archna', function () {
+    var bongIndex = prepare.helper.index();
+    prepare.string.bong( 'rachna', 2, bongIndex.build, 0 );
+    prepare.string.bong( 'archna', 2, bongIndex.build, 1 );
+    var result = bongIndex.result();
+    expect( result ).to.deep.equal( { ac: [ 0 ], ar: [ 1 ], ch: [ 0, 1 ], hn: [ 0, 1 ], na: [ 0, 1 ], ra: [ 0 ], rc: [ 1 ] } );
   } );
 
   errors.slice( 0, 2 ).forEach( function ( error ) {
