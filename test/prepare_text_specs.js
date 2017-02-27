@@ -755,6 +755,29 @@ describe( 'prepare.tokens.bow()', function () {
   } );
 } );
 
+describe( 'tokens.sow()', function () {
+  it( 'should return set', function () {
+    var myset = prepare.tokens.sow( [ 'apples', 'fall', 'under', 'gravity', 'and', 'apples', 'rise' ] );
+    expect( myset.has( 'apples' ) ).to.deep.equal( true );
+    expect( myset.has( 'fall' ) ).to.deep.equal( true );
+    expect( myset.has( 'under' ) ).to.deep.equal( true );
+    expect( myset.has( 'gravity' ) ).to.deep.equal( true );
+    expect( myset.has( 'rise' ) ).to.deep.equal( true );
+    expect( myset.has( 'and' ) ).to.deep.equal( true );
+    expect( myset.size ).to.deep.equal( 6 );
+    expect( myset.has( 'bananas' ) ).to.deep.equal( false );
+  } );
+
+  it( 'indexer result should return an index', function () {
+    var sowIndex = prepare.helper.index();
+    prepare.tokens.sow( [ 'apple', 'is', 'a', 'company' ], sowIndex.build, 0 );
+    prepare.tokens.sow( [ 'apple', 'is', 'a', 'fruit' ], sowIndex.build, 1 );
+    var result = sowIndex.result();
+    expect( result ).to.deep.equal( { a: [ 0, 1 ], apple: [ 0, 1 ], is: [ 0, 1 ], company: [ 0 ], fruit: [ 1 ] } );
+  } );
+} );
+
+
 // ### Create words - without mapper test cases
 
 // Higher order function, can only test the true/false status with inputs
