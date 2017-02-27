@@ -740,6 +740,14 @@ describe( 'prepare.tokens.bow()', function () {
     } );
   } );
 
+  it( 'indexer result should return an index of 2-grams of rachna & archna', function () {
+    var bowIndex = prepare.helper.index();
+    prepare.tokens.bow( [ 'mary', 'had', 'a', 'lamb' ], false, bowIndex.build, 0 );
+    prepare.tokens.bow( [ 'tom', 'has', 'a', 'lamb' ], false, bowIndex.build, 1 );
+    var result = bowIndex.result();
+    expect( result ).to.deep.equal( { tom: [ 1 ], mary: [ 0 ], lamb: [ 0, 1 ], a: [ 0, 1 ], had: [ 0 ], has: [ 1 ] } );
+  } );
+
   errors.slice( 0, 2 ).forEach( function ( error ) {
     it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
       expect( prepare.tokens.bow.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
