@@ -45,6 +45,8 @@ describe( 'numberWithSOM()', function () {
     { whenInputIs: '     ', expectedOutputIs: null },
     { whenInputIs: '1.23 Kgs.', expectedOutputIs: { num: 1.23, som: 'Kgs.' } },
     { whenInputIs: '123 light years', expectedOutputIs: { num: 123, som: 'light years' } },
+    { whenInputIs: '123', expectedOutputIs: { num: 123, som: '' } },
+    { whenInputIs: '123 12', expectedOutputIs: { num: 123, som: '12' } },
     { whenInputIs: '9.87e+34Kgs.', expectedOutputIs: { num: 9.87e+34, som: 'Kgs.' } },
   ];
 
