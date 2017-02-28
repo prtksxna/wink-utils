@@ -134,7 +134,10 @@ describe( 'string.createDLFunction( )', function () {
     { whenInputIs: [ 'xion@testmail.in', 'xion@testmail.com' ], expectedOutputIs: { distance: 3, similarity: 0.8235294117647058 } },
     { whenInputIs: [ '100,300,000.00', '100,300,001.00' ], expectedOutputIs: { distance: 1, similarity: 0.9285714285714286 } },
     { whenInputIs: [ 'lengthy', '' ], expectedOutputIs: { distance: 7, similarity: 0 } },
-    { whenInputIs: [ '', 'lengthy' ], expectedOutputIs: { distance: 7, similarity: 0 } }
+    { whenInputIs: [ '', 'lengthy' ], expectedOutputIs: { distance: 7, similarity: 0 } },
+    // Only adjacent transpositions are handled:
+    { whenInputIs: [ 'abc', 'ca' ], expectedOutputIs: { distance: 3, similarity: 0 } },
+    { whenInputIs: [ 'acb', 'ca' ], expectedOutputIs: { distance: 2, similarity: 0.33333333333333337 } },
   ];
 
   tests.forEach( function ( test ) {
