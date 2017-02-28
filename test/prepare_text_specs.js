@@ -878,3 +878,32 @@ describe( 'string.removeHTMLTags()', function () {
     } );
   } );
 } );
+
+// ### Propagate Negation test cases.
+
+describe( 'prepare.tokens.propagateNegations()', function () {
+  var tests = [
+    { whenInputIs: [ [ 'mary', 'is', 'feeling', 'good', 'today' ] ], expectedOutputIs: [ 'mary', 'is', 'feeling', 'good', 'today' ] },
+    { whenInputIs: [ [ 'mary', 'is', 'not', 'feeling', 'good', 'today' ] ], expectedOutputIs: [ 'mary', 'is', 'not', '!feeling', '!good', 'today' ] },
+    { whenInputIs: [ [ 'mary', 'is', 'not', 'feeling', 'good', 'today' ], 300 ], expectedOutputIs: [ 'mary', 'is', 'not', '!feeling', '!good', '!today' ] },
+    { whenInputIs: [ [ 'mary', 'is', 'not', 'feeling', 'good', 'today' ], 3 ], expectedOutputIs: [ 'mary', 'is', 'not', '!feeling', '!good', '!today' ] },
+    { whenInputIs: [ [ 'mary', 'is', 'not', 'feeling', 'good', 'today' ], 1 ], expectedOutputIs: [ 'mary', 'is', 'not', '!feeling', 'good', 'today' ] },
+    { whenInputIs: [ [ 'mary', 'is', 'not', 'feeling', 'good', 'today', ',', 'was', 'ok', 'yesterday' ] ], expectedOutputIs: [ 'mary', 'is', 'not', '!feeling', '!good', 'today', ',', 'was', 'ok', 'yesterday' ] },
+    { whenInputIs: [ [ 'mary', 'is', 'not', 'feeling', 'good', 'today', ',', 'was', 'ok', 'yesterday' ], 3 ], expectedOutputIs: [ 'mary', 'is', 'not', '!feeling', '!good', '!today', ',', 'was', 'ok', 'yesterday' ] },
+    { whenInputIs: [ [ 'mary', 'is', 'not', 'feeling', 'good', 'today', ',', 'was', 'ok', 'yesterday' ], 4 ], expectedOutputIs: [ 'mary', 'is', 'not', '!feeling', '!good', '!today', ',', 'was', 'ok', 'yesterday' ] },
+    { whenInputIs: [ [ 'mary', 'is', 'not', 'feeling', 'good', 'today', ',', 'was', 'ok', 'yesterday' ], 400 ], expectedOutputIs: [ 'mary', 'is', 'not', '!feeling', '!good', '!today', ',', 'was', 'ok', 'yesterday' ] },
+    { whenInputIs: [ [ 'mary', 'is', 'not', 'feeling', 'good', 'today', ',', 'was', 'not', 'ok', 'yesterday' ], 400 ], expectedOutputIs: [ 'mary', 'is', 'not', '!feeling', '!good', '!today', ',', 'was', 'not', '!ok', '!yesterday' ] },
+  ];
+
+  tests.forEach( function ( test ) {
+    it( 'should return ' + JSON.stringify( test.expectedOutputIs ) + ' if the input is ' + JSON.stringify( test.whenInputIs ), function () {
+      expect( prepare.tokens.propagateNegations.apply( null, test.whenInputIs ) ).to.deep.equal( test.expectedOutputIs );
+    } );
+  } );
+
+  errors.slice( 0, 2 ).forEach( function ( error ) {
+    it( 'should throw ' + error.expectedOutputIs + ' if the input is ' + JSON.stringify( error.whenInputIs ), function () {
+      expect( prepare.tokens.removeWords.bind( null, error.whenInputIs ) ).to.throw( error.expectedOutputIs );
+    } );
+  } );
+} );
