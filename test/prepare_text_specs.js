@@ -483,6 +483,27 @@ describe( 'string.bong()', function () {
   } );
 } );
 
+// ### SONG test cases.
+
+describe( 'string.song()', function () {
+  it( 'should return set of 3-grams of apple', function () {
+    var myset = prepare.string.song( 'apple', 3 );
+    expect( myset.has( 'app' ) ).to.deep.equal( true );
+    expect( myset.has( 'ppl' ) ).to.deep.equal( true );
+    expect( myset.has( 'ple' ) ).to.deep.equal( true );
+    expect( myset.size ).to.deep.equal( 3 );
+    expect( myset.has( 'ap' ) ).to.deep.equal( false );
+  } );
+
+  it( 'indexer result should return an index of a and b', function () {
+    var songIndex = prepare.helper.index();
+    prepare.string.song( 'sack', 2, songIndex.build, 0 );
+    prepare.string.song( 'rack', 0, songIndex.build, 1 );
+    var result = songIndex.result();
+    expect( result ).to.deep.equal( { sa: [ 0 ], ra: [ 1 ], ac: [ 0, 1 ], ck: [ 0, 1 ] } );
+  } );
+} );
+
 // ### Create sentences test cases.
 
 describe( 'string.sentences()', function () {
