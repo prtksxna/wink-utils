@@ -136,6 +136,31 @@ describe( 'string.jaro()', function () {
   } );
 } );
 
+// ### Jaro-Winkler test cases
+
+describe( 'string.jaroWinkler()', function () {
+  var tests = [
+    { whenInputIs: [ 'loans and accounts', 'loan account' ], expectedOutputIs: { similarity: 0.9, distance: 0.09999999999999998 } },
+    { whenInputIs: [ 'donald', 'donavan' ], expectedOutputIs: { similarity: 0.8476190476190476, distance: 0.1523809523809524 } },
+    // Notice the drop in similarity with rise in boost threshold.
+    { whenInputIs: [ 'donald', 'donavan', 0.1, 0.85 ], expectedOutputIs: { similarity: 0.746031746031746, distance: 0.25396825396825395 } },
+    // Notice rise in similarity with rise in scaling factor.
+    { whenInputIs: [ 'donald', 'donavan', 0.2 ], expectedOutputIs: { similarity: 0.9492063492063492, distance: 0.050793650793650835 } },
+    // Test importance of matches in the start of string.
+    { whenInputIs: [ 'donald', 'donavanx', 0.1 ], expectedOutputIs: { similarity: 0.8333333333333334, distance: 0.16666666666666663 } },
+    { whenInputIs: [ 'donald', 'xdonavan', 0.1 ], expectedOutputIs: { similarity: 0.7222222222222222, distance: 0.2777777777777778 } },
+    { whenInputIs: [ 'donald', 'dxonavan', 0.1 ], expectedOutputIs: { similarity: 0.75, distance: 0.25 } },
+    { whenInputIs: [ 'donald', 'doxnavan', 0.1 ], expectedOutputIs: { similarity: 0.7777777777777778, distance: 0.2222222222222222 } },
+    { whenInputIs: [ 'trace', 'trace' ], expectedOutputIs: { similarity: 1, distance: 0 } },
+  ];
+
+  tests.forEach( function ( t ) {
+    it( 'should return when input is ' + t.whenInputIs.join( ', ' ), function () {
+      expect( similarity.string.jaroWinkler.apply( null, t.whenInputIs ) ).to.deep.equal( t.expectedOutputIs );
+    } );
+  } );
+} );
+
 // ### string dl test cases
 
 // Damerau-Levenshtein(DL) similarity is a higher order function. It is
