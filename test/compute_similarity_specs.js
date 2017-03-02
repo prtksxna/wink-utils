@@ -112,6 +112,29 @@ describe( 'set.tversky()', function () {
   } );
 } );
 
+// ### Jaro test cases
+
+describe( 'string.jaro()', function () {
+  var tests = [
+    { whenInputIs: [ 'loans and accounts', 'loan account' ], expectedOutputIs: { similarity: 0.8333333333333334, distance: 1 - 0.8333333333333334 } },
+    { whenInputIs: [ 'loan account', 'loans and accounts' ], expectedOutputIs: { similarity: 0.8333333333333334, distance: 1 - 0.8333333333333334 } },
+    { whenInputIs: [ 'trace', 'crate' ], expectedOutputIs: { similarity: 0.7333333333333334, distance: 1 - 0.7333333333333334 } },
+    { whenInputIs: [ 'trace', 'trace' ], expectedOutputIs: { similarity: 1, distance: 0 } },
+    { whenInputIs: [ 'trace', '' ], expectedOutputIs: { similarity: 0, distance: 1 } },
+    { whenInputIs: [ '', 'trace' ], expectedOutputIs: { similarity: 0, distance: 1 } },
+    { whenInputIs: [ '', '' ], expectedOutputIs: { similarity: 1, distance: 0 } },
+    { whenInputIs: [ 'abcd', 'badc' ], expectedOutputIs: { similarity: 0.8333333333333334, distance: 1 - 0.8333333333333334 } },
+    { whenInputIs: [ 'abcd', 'dcba' ], expectedOutputIs: { similarity: 0.5, distance: 0.5 } },
+    { whenInputIs: [ 'washington', 'notgnihsaw' ], expectedOutputIs: { similarity: 0.43333333333333335, distance: 1 - 0.43333333333333335 } },
+    { whenInputIs: [ 'washington', 'washingtonx' ], expectedOutputIs: { similarity: 0.9696969696969697, distance: 1 - 0.9696969696969697 } },
+  ];
+
+  tests.forEach( function ( t ) {
+    it( 'should return when input is ' + t.whenInputIs.join( ', ' ), function () {
+      expect( similarity.string.jaro( t.whenInputIs[ 0 ], t.whenInputIs[ 1 ] ) ).to.deep.equal( t.expectedOutputIs );
+    } );
+  } );
+} );
 
 // ### string dl test cases
 
