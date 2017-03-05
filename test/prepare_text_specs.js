@@ -456,7 +456,9 @@ describe( 'string.bong()', function () {
     { whenInputIs: [ 'rachna', 0 ], expectedOutputIs: { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 } },
     { whenInputIs: [ 'rachna' ], expectedOutputIs: { ra: 1, ac: 1, ch: 1, hn: 1, na: 1 } },
     { whenInputIs: [ 'rachna', 7 ], expectedOutputIs: Object.create( null ) },
+    // See indexer part: `ma` for each string is considered only once.
     { whenInputIs: [ 'mamma', 2 ], expectedOutputIs: { ma: 2, am: 1, mm: 1 } },
+    { whenInputIs: [ 'mama', 2 ], expectedOutputIs: { ma: 2, am: 1 } },
     { whenInputIs: [ 'rain rain', 3 ], expectedOutputIs: { ' ra': 1, ain: 2, 'in ': 1, 'n r': 1, rai: 2 } },
     { whenInputIs: [ 'rain rain', -3 ], expectedOutputIs: { } },
     { whenInputIs: [ 'fastidious', 11 ], expectedOutputIs: { } }
@@ -470,10 +472,10 @@ describe( 'string.bong()', function () {
 
   it( 'indexer result should return an index of 2-grams of rachna & archna', function () {
     var bongIndex = prepare.helper.index();
-    prepare.string.bong( 'rachna', 2, bongIndex.build, 0 );
-    prepare.string.bong( 'archna', 2, bongIndex.build, 1 );
+    prepare.string.bong( 'mamma', 2, bongIndex.build, 0 );
+    prepare.string.bong( 'mama', 2, bongIndex.build, 1 );
     var result = bongIndex.result();
-    expect( result ).to.deep.equal( { ac: [ 0 ], ar: [ 1 ], ch: [ 0, 1 ], hn: [ 0, 1 ], na: [ 0, 1 ], ra: [ 0 ], rc: [ 1 ] } );
+    expect( result ).to.deep.equal( { ma: [ 0, 1 ], am: [ 0, 1 ], mm: [ 0 ] } );
   } );
 
   errors.slice( 0, 2 ).forEach( function ( error ) {
@@ -497,10 +499,10 @@ describe( 'string.song()', function () {
 
   it( 'indexer result should return an index of a and b', function () {
     var songIndex = prepare.helper.index();
-    prepare.string.song( 'sack', 2, songIndex.build, 0 );
-    prepare.string.song( 'rack', 0, songIndex.build, 1 );
+    prepare.string.song( 'mamma', 2, songIndex.build, 0 );
+    prepare.string.song( 'mama', 0, songIndex.build, 1 );
     var result = songIndex.result();
-    expect( result ).to.deep.equal( { sa: [ 0 ], ra: [ 1 ], ac: [ 0, 1 ], ck: [ 0, 1 ] } );
+    expect( result ).to.deep.equal( { ma: [ 0, 1 ], am: [ 0, 1 ], mm: [ 0 ] } );
   } );
 } );
 
@@ -764,9 +766,9 @@ describe( 'prepare.tokens.bow()', function () {
   it( 'indexer result should return an index of 2-grams of rachna & archna', function () {
     var bowIndex = prepare.helper.index();
     prepare.tokens.bow( [ 'mary', 'had', 'a', 'lamb' ], false, bowIndex.build, 0 );
-    prepare.tokens.bow( [ 'tom', 'has', 'a', 'lamb' ], false, bowIndex.build, 1 );
+    prepare.tokens.bow( [ 'blue', 'lamb', 'white', 'lamb' ], false, bowIndex.build, 1 );
     var result = bowIndex.result();
-    expect( result ).to.deep.equal( { tom: [ 1 ], mary: [ 0 ], lamb: [ 0, 1 ], a: [ 0, 1 ], had: [ 0 ], has: [ 1 ] } );
+    expect( result ).to.deep.equal( { blue: [ 1 ], mary: [ 0 ], lamb: [ 0, 1 ], a: [ 0 ], had: [ 0 ], white: [ 1 ] } );
   } );
 
   errors.slice( 0, 2 ).forEach( function ( error ) {
