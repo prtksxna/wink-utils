@@ -1,0 +1,35 @@
+{
+  "similarityPrepTasks": [
+    [ "string.lowerCase" ],
+    [ "string.removeExtraSpaces" ],
+    [ "string.retainAlphaNums" ],
+    [ "string.tokenize0" ],
+    [ "tokens.stem" ],
+    [ "tokens.phonetize" ],
+    [ "tokens.removeWords" ],
+    [ "tokens.sow" ]
+  ],
+  "similarityMeasure": [ "set.tversky", 0.5, 0.5 ],
+  "stopWords": [ ],
+  "stopWordsPrepTasks": [
+    [ "string.stem" ]
+  ],
+
+  "indexUsing": null,
+  "synonyms": [
+    {
+     "category": "array",
+     "identifiers": [
+       "array of objects",
+       "array of numbers"
+     ]
+    },
+    {
+     "category": "set",
+     "identifiers": [
+       "sets are made of numbers",
+       "sets are made of objects"
+     ]
+    }
+  ]
+}

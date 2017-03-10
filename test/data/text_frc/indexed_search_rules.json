@@ -1,0 +1,44 @@
+{
+  "similarityPrepTasks": [
+    [ "string.lowerCase" ],
+    [ "string.removeExtraSpaces" ],
+    [ "string.retainAlphaNums" ],
+    [ "string.tokenize0" ],
+    [ "tokens.stem" ],
+    [ "tokens.phonetize" ],
+    [ "tokens.removeWords" ],
+    [ "tokens.sow" ]
+  ],
+  "similarityMeasure": [ "set.jaccard" ],
+  "stopWords": [ "is", "am" ],
+  "stopWordsPrepTasks": [
+    [ "string.stem" ]
+  ],
+  "indexPrepTasks": [
+    [ "string.lowerCase" ],
+    [ "string.removeExtraSpaces" ],
+    [ "string.retainAlphaNums" ],
+    [ "string.tokenize0" ],
+    [ "tokens.stem" ],
+    [ "tokens.phonetize" ],
+    [ "tokens.removeWords" ]
+  ],
+  "indexUsing": [ "tokens.bow" ],
+  "synonyms": [
+    {
+     "category": "array",
+     "identifiers": [
+       "array of objects",
+       "array of numbers"
+     ]
+    },
+    {
+     "category": "set",
+     "identifiers": [
+       "sets of numbers",
+       "sets of objects",
+       "objects or sets"
+     ]
+    }
+  ]
+}

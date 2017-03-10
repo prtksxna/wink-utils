@@ -1,0 +1,28 @@
+{
+  "similarityPrepTasks": [
+    [ "string.lowerCase" ],
+    [ "string.removeExtraSpaces" ]
+  ],
+  "similarityMeasure": [ "string.createDLFunction" ],
+  "indexPrepTasks": [
+    [ "string.lowerCase" ],
+    [ "string.removeExtraSpaces" ]
+  ],
+  "indexUsing": [ "string.soc" ],
+  "synonyms": [
+    {
+     "category": "girl",
+     "identifiers": [
+       "rachna",
+       "dolly"
+     ]
+    },
+    {
+     "category": "boy",
+     "identifiers": [
+       "sanjai",
+       "rajiv"
+     ]
+    }
+  ]
+}
